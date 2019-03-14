@@ -46,6 +46,7 @@ Game::Game(std::string title, int width, int height) {
     }
 
     state = new State();
+    state->LoadAssets();
 }
 
 Game::~Game() {

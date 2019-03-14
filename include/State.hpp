@@ -5,10 +5,8 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#define INCLUDE_SDL
-
 #include <string>
-#include "SDL_include.h"
+#include "Sprite.hpp"
 
 class State {
     public:

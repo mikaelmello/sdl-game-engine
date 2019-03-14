@@ -1,7 +1,3 @@
-#define INCLUDE_SDL_IMAGE
-#define INCLUDE_SDL_MIXER
-#include "SDL_include.h"
-
 #include "State.hpp"
 #include <string>
 #include <iostream>
@@ -10,7 +6,7 @@ State::State() : quitRequested(false), bg("path") {
 }
 
 void State::LoadAssets() {
-
+    bg = Sprite("assets/img/ocean.jpg");
 }
 
 void State::Update(float dt) {
@@ -20,7 +16,7 @@ void State::Update(float dt) {
 }
 
 void State::Render() {
-    bg.Render();
+    bg.Render(0, 0);
 }
 
 bool State::QuitRequested() {
