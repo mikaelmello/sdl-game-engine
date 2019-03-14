@@ -9,6 +9,7 @@
 
 #include <string>
 #include "SDL_include.h"
+#include "State.hpp"
 
 class Game {
     public:
