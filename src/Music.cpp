@@ -17,7 +17,7 @@ void Music::Open(std::string file) {
     }
 }
 
-void Music::Play(int times = -1) {
+void Music::Play(int times) {
     if (music == nullptr) {
         return;
     }
@@ -28,7 +28,7 @@ void Music::Play(int times = -1) {
     }
 }
 
-void Music::Stop(int msTostop = 1500) {
+void Music::Stop(int msTostop) {
     int return_code = Mix_FadeOutMusic(msTostop);
     if (return_code != 0) {
         throw "Failed to stop music";

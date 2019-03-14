@@ -2,7 +2,9 @@
 #include <string>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets/audio/stageState.ogg") {}
+State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets/audio/stageState.ogg") {
+    music.Play();
+}
 
 void State::LoadAssets() {
 }

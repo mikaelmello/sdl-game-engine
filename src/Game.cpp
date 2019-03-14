@@ -6,13 +6,21 @@
 #include <string>
 #include <iostream>
 
+Game* Game::instance = nullptr;
+
 void report_sdl_error(std::string error_message, int return_code) {
     std::cout << error_message << std::endl;
     std::cout << std::endl << SDL_GetError() << std::endl;
+    std::cout << return_code << std::endl;
     exit(100);
 }
 
 Game::Game(std::string title, int width, int height) {
+    if (instance == nullptr) {
+        instance = this;
+    } else {
+        throw  "Nao e para chegar aqui";
+    }
     int return_code;
     
     return_code = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
@@ -20,13 +28,15 @@ Game::Game(std::string title, int width, int height) {
         report_sdl_error("Erro ao inicializar a biblioteca SDL", return_code);    
     }
 
-    return_code = IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
-    if (return_code != 0) {
+    int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF;
+    return_code = IMG_Init(img_flags);
+    if (return_code != img_flags) {
         report_sdl_error("Erro ao inicializar a biblioteca SDL_Image", return_code);
     }
 
-    return_code = Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG);
-    if (return_code != 0) {
+    int mix_flags = MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG;
+    return_code = Mix_Init(mix_flags);
+    if (return_code != mix_flags) {
         report_sdl_error("Erro ao inicializar a biblioteca SDL_Mixer", return_code);
     }
 
@@ -46,7 +56,6 @@ Game::Game(std::string title, int width, int height) {
     }
 
     state = new State();
-    state->LoadAssets();
 }
 
 Game::~Game() {
@@ -76,8 +85,8 @@ SDL_Renderer* Game::GetRenderer() {
 }
 
 void Game::Run() {
-    while (!state->QuitRequested) {
-        state->Update();
+    while (!state->QuitRequested()) {
+        state->Update(33);
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);

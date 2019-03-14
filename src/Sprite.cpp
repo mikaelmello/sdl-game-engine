@@ -24,8 +24,7 @@ void Sprite::Open(std::string file) {
         SDL_DestroyTexture(texture);
     }
 
-    Game game = Game::GetInstance();
-    texture = IMG_LoadTexture(game.GetRenderer(), file.c_str());
+    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
 
     if (texture == nullptr) {
         throw "Failed to load texture";
@@ -41,8 +40,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 
 void Sprite::Render(int x, int y) {
     SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
-    Game game = Game::GetInstance();
-    SDL_RenderCopy(game.GetRenderer(), texture, &clipRect, &temp_rect);
+    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
 }
 
 int Sprite::GetWidth() {
