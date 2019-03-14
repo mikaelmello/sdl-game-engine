@@ -2,11 +2,9 @@
 #include <string>
 #include <iostream>
 
-State::State() : quitRequested(false), bg("path") {
-}
+State::State() : quitRequested(false), bg("assets/img/ocean.jpg"), music("assets/audio/stageState.ogg") {}
 
 void State::LoadAssets() {
-    bg = Sprite("assets/img/ocean.jpg");
 }
 
 void State::Update(float dt) {

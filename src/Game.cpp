@@ -62,7 +62,7 @@ Game::~Game() {
 
 Game& Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("Trabalho 1", 800, 800);
+        instance = new Game("Mikael Mello - 16/0015537", 1024, 600);
     }
     return *instance;
 }

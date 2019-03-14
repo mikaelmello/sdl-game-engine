@@ -7,6 +7,7 @@
 
 #include <string>
 #include "Sprite.hpp"
+#include "Music.hpp"
 
 class State {
     public:
