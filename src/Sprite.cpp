@@ -5,6 +5,7 @@
 #include "SDL_include.h"
 #include "Sprite.hpp"
 #include "Game.hpp"
+#include <stdexcept>
 #include <string>
 
 Sprite::Sprite() : texture(nullptr) {}
@@ -27,10 +28,13 @@ void Sprite::Open(std::string file) {
     texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
 
     if (texture == nullptr) {
-        throw "Failed to load texture";
+        throw std::runtime_error("Could not load texture from file " + file + ": " + IMG_GetError());
     }
 
-    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    int return_code = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    if (return_code != 0) {
+        throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());
+    }
     SetClip(0, 0, width, height);
 }
 
@@ -40,7 +44,10 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 
 void Sprite::Render(int x, int y) {
     SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
-    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
+    int return_code = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
+    if (return_code != 0) {
+        throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
+    }
 }
 
 int Sprite::GetWidth() {
