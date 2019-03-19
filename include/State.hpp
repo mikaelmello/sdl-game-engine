@@ -13,7 +13,7 @@ class State {
     public:
         State();
 
-        bool QuitRequested();
+        bool QuitRequested() const;
 
         void LoadAssets();
 

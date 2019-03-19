@@ -8,11 +8,11 @@
 
 Music::Music() : music(nullptr) {}
 
-Music::Music(std::string file) : music(nullptr) {
+Music::Music(const std::string& file) : music(nullptr) {
     Open(file);
 }
 
-void Music::Open(std::string file) {
+void Music::Open(const std::string& file) {
     music = Mix_LoadMUS(file.c_str());
     if (music == nullptr) {
         throw std::runtime_error("Could not load music from file " + file + ": " + Mix_GetError());
@@ -38,7 +38,7 @@ void Music::Stop(int msTostop) {
     }
 }
 
-bool Music::IsOpen() {
+bool Music::IsOpen() const {
     return music != nullptr;
 }
 

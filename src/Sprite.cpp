@@ -10,7 +10,7 @@
 
 Sprite::Sprite() : texture(nullptr) {}
 
-Sprite::Sprite(std::string file) : texture(nullptr) {
+Sprite::Sprite(const std::string& file) : texture(nullptr) {
     Open(file);
 }
 
@@ -20,7 +20,7 @@ Sprite::~Sprite() {
     }
 }
 
-void Sprite::Open(std::string file) {
+void Sprite::Open(const std::string& file) {
     if (texture != nullptr) {
         SDL_DestroyTexture(texture);
     }
@@ -50,15 +50,15 @@ void Sprite::Render(int x, int y) {
     }
 }
 
-int Sprite::GetWidth() {
+int Sprite::GetWidth() const {
     return width;
 }
 
-int Sprite::GetHeight() {
+int Sprite::GetHeight() const {
     return height;
 }
 
-bool Sprite::IsOpen() {
+bool Sprite::IsOpen() const {
     return texture != nullptr;
 }
 

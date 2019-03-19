@@ -27,6 +27,6 @@ void State::Render() {
     bg.Render(0, 0);
 }
 
-bool State::QuitRequested() {
+bool State::QuitRequested() const {
     return quitRequested;
 }

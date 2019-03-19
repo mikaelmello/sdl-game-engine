@@ -9,7 +9,7 @@
 
 Game* Game::instance = nullptr;
 
-Game::Game(std::string title, int width, int height) {
+Game::Game(const std::string& title, int width, int height) {
     if (instance == nullptr) {
         instance = this;
     } else {
