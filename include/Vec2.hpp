@@ -13,13 +13,15 @@ class Vec2 {
 
         Vec2(float x, float y);
 
-        Vec2 Normalized();
+        Vec2 GetNormalized() const;
 
-        float Magnitude();
+        Vec2 GetRotated(const float& d) const;
+
+        float Magnitude() const;
         
-        float Distance(const Vec2& v);
+        float Distance(const Vec2& v) const;
 
-        float XAxisInclination();
+        float XAxisInclination() const;
 
         Vec2& operator+=(const Vec2& rhs);
         Vec2& operator-=(const Vec2& rhs);
@@ -46,16 +48,14 @@ class Vec2 {
             return rhs;
         }
 
-        std::string ToString() {
+        std::string ToString() const {
             return std::string("x:") + std::to_string(x) + std::string(" y:") + std::to_string(y);
         }
-
-        Vec2& Rotate(const float& d);
         
         static float XAxisLineInclination(const Vec2& v1, const Vec2& v2);
-    private:
-      float x;
-      float y;
+        
+        float x;
+        float y;
 };
 
 #endif
