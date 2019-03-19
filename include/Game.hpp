@@ -24,7 +24,7 @@ class Game {
         static Game& GetInstance();        
 
     private:
-        Game(std::string title, int width, int height);
+        Game(const std::string& title, int width, int height);
 
         static Game* instance;
 
