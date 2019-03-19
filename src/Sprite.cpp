@@ -5,6 +5,7 @@
 #include "SDL_include.h"
 #include "Sprite.hpp"
 #include "Game.hpp"
+#include "GameObject.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -43,7 +44,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render() {
-    SDL_Rect temp_rect = { associated.x, associated.y, clipRect.w, clipRect.h };
+    SDL_Rect temp_rect = { associated.box.x, associated.box.y, clipRect.w, clipRect.h };
     int return_code = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
