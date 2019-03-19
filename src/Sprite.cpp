@@ -11,7 +11,7 @@
 
 Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr) {}
 
-Sprite::Sprite(GameObject& associated, const std::string& file) : Component(associated), texture(nullptr) {
+Sprite::Sprite(GameObject& associated, const std::string& file) : Sprite(associated) {
     Open(file);
 }
 
