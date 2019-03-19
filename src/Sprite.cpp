@@ -8,9 +8,9 @@
 #include <stdexcept>
 #include <string>
 
-Sprite::Sprite() : texture(nullptr) {}
+Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr) {}
 
-Sprite::Sprite(const std::string& file) : texture(nullptr) {
+Sprite::Sprite(GameObject& associated, const std::string& file) : Component(associated), texture(nullptr) {
     Open(file);
 }
 
@@ -42,12 +42,18 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect = { x, y, w, h };
 }
 
-void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
+void Sprite::Render() {
+    SDL_Rect temp_rect = { associated.x, associated.y, clipRect.w, clipRect.h };
     int return_code = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
     }
+}
+
+void Sprite::Update() {}
+
+bool Sprite::Is(const std::string& type) {
+    return type == std::string("Sprite");
 }
 
 int Sprite::GetWidth() const {

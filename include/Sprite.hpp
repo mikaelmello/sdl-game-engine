@@ -9,12 +9,13 @@
 
 #include <string>
 #include "SDL_include.h"
+#include "Component.hpp"
 
-class Sprite {
+class Sprite : public Component {
     public:
-        Sprite();
+        Sprite(GameObject& associated);
 
-        Sprite(const std::string& file);
+        Sprite(GameObject& associated, const std::string& file);
 
         ~Sprite();
 
@@ -22,7 +23,11 @@ class Sprite {
 
         void SetClip(int x, int y, int w, int h);
 
-        void Render(int x, int y);
+        void Update();
+
+        bool Is(const std::string& type);
+
+        void Render();
 
         int GetWidth() const;
 
