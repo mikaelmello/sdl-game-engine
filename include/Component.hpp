@@ -7,6 +7,8 @@
 
 #include <string>
 
+class GameObject;
+
 class Component {
     public:
         Component(GameObject& associated);

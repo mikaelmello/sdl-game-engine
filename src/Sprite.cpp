@@ -51,7 +51,7 @@ void Sprite::Render() {
     }
 }
 
-void Sprite::Update() {}
+void Sprite::Update(float dt) {}
 
 bool Sprite::Is(const std::string& type) {
     return type == std::string("Sprite");

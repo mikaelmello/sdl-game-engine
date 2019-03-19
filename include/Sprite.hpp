@@ -10,6 +10,7 @@
 #include <string>
 #include "SDL_include.h"
 #include "Component.hpp"
+#include "GameObject.hpp"
 
 class Sprite : public Component {
     public:
@@ -23,7 +24,7 @@ class Sprite : public Component {
 
         void SetClip(int x, int y, int w, int h);
 
-        void Update();
+        void Update(float dt);
 
         bool Is(const std::string& type);
 
