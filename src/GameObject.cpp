@@ -10,15 +10,19 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Update(float dt) {
-    for (int i = 0; i < components.size(); i++) {
-        components[i]->Update(dt);
-    }
+    std::for_each(
+        components.begin(),
+        components.end(),
+        [&](auto&& cpt) { cpt->Update(dt); }
+    );
 }
 
 void GameObject::Render() {
-    for (int i = 0; i < components.size(); i++) {
-        components[i]->Render();
-    }
+    std::for_each(
+        components.begin(),
+        components.end(),
+        [&](auto&& cpt) { cpt->Render(); }
+    );
 }
 
 bool GameObject::IsDead() const {
