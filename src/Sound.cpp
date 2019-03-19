@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 
-Sound::Sound(GameObject& associated) : Component(associated), chunk(nullptr) {}
+Sound::Sound(GameObject& associated) : Component(associated), chunk(nullptr), channel(-1) {}
 
 Sound::Sound(GameObject& associated, const std::string& file) : Sound(associated) {
     Open(file);
@@ -35,14 +35,17 @@ void Sound::Play(int times) {
     if (availableChannel == -1) {
         throw std::runtime_error("Could not play sound: " + std::string(Mix_GetError()));
     }
+    Mix_Volume(availableChannel, MIX_MAX_VOLUME);
     channel = availableChannel;
 }
 
 void Sound::Stop() {
-    if (chunk != nullptr) {
+    if (chunk != nullptr && channel != -1) {
         Mix_HaltChannel(channel);
     }
 }
+
+void Sound::Render() {}
 
 void Sound::Update(float dt) {}
 

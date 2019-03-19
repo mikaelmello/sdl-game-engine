@@ -24,11 +24,11 @@ class Sprite : public Component {
 
         void SetClip(int x, int y, int w, int h);
 
-        void Update(float dt);
+        void Update(float dt) override;
 
-        bool Is(const std::string& type);
+        bool Is(const std::string& type) override;
 
-        void Render();
+        void Render() override;
 
         int GetWidth() const;
 

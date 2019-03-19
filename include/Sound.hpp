@@ -27,11 +27,11 @@ class Sound : public Component {
 
         void Stop();
 
-        void Update(float dt);
+        void Update(float dt) override;
 
-        bool Is(const std::string& type);
+        bool Is(const std::string& type) override;
 
-        void Render();
+        void Render() override;
 
         bool IsOpen() const;
     private:

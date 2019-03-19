@@ -14,15 +14,13 @@ class Face : public Component {
     public:
         Face(GameObject& associated);
 
-        ~Face();
-
         void Damage(int damage);
 
-        void Update(float dt);
+        void Update(float dt) override;
 
-        bool Is(const std::string& type);
+        bool Is(const std::string& type) override;
 
-        void Render();
+        void Render() override;
     private:
         int hitpoints;
 };

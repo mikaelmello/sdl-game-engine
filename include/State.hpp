@@ -6,12 +6,17 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <string>
+#include <vector>
+#include <memory>
+#include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Music.hpp"
 
 class State {
     public:
         State();
+
+        ~State();
 
         bool QuitRequested() const;
 
@@ -21,7 +26,11 @@ class State {
 
         void Render();
     private:
-        Sprite bg;
+        void Input();
+
+        void AddObject(int mouseX, int mouseY);
+
+        std::vector<std::unique_ptr<GameObject>> objects;
         Music music;
         bool quitRequested;
 };

@@ -5,7 +5,6 @@
 #include "Game.hpp"
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
 Game* Game::instance = nullptr;
 
