@@ -28,4 +28,6 @@ void Resources::ClearSounds() {
         soundTable.end(),
         [](std::unordered_map<std::string, Mix_Chunk*>::value_type item) { Mix_FreeChunk(item.second); }
     );
+
+    soundTable.clear();
 }
