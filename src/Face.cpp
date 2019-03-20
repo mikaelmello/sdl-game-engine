@@ -19,6 +19,6 @@ void Face::Update(float dt) {}
 
 void Face::Render() {}
 
-bool Face::Is(const std::string& type) {
+bool Face::Is(const std::string& type) const {
     return type == std::string("Face");
 }

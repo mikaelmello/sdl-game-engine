@@ -29,7 +29,7 @@ class Sound : public Component {
 
         void Update(float dt) override;
 
-        bool Is(const std::string& type) override;
+        bool Is(const std::string& type) const override;
 
         void Render() override;
 

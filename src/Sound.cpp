@@ -41,7 +41,7 @@ void Sound::Render() {}
 
 void Sound::Update(float dt) {}
 
-bool Sound::Is(const std::string& type) {
+bool Sound::Is(const std::string& type) const {
     return type == std::string("Sound");
 }
 
