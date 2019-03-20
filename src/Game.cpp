@@ -3,6 +3,7 @@
 #include "SDL_include.h"
 
 #include "Game.hpp"
+#include "Resources.hpp"
 #include <string>
 #include <stdexcept>
 
@@ -84,4 +85,6 @@ void Game::Run() {
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
     }
+
+    Resources::ClearSounds();
 }

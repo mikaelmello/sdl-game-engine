@@ -6,6 +6,7 @@
 #include "Sound.hpp"
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include "Resources.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -15,19 +16,10 @@ Sound::Sound(GameObject& associated, const std::string& file) : Sound(associated
     Open(file);
 }
 
-Sound::~Sound() {
-    Stop();
-    if (chunk != nullptr) {
-        Mix_FreeChunk(chunk);
-    }
-}
+Sound::~Sound() {}
 
 void Sound::Open(const std::string& file) {
-    chunk = Mix_LoadWAV(file.c_str());
-
-    if (chunk == nullptr) {
-        throw std::runtime_error("Could not load sound from file " + file + ": " + Mix_GetError());
-    }
+    chunk = Resources::GetSound(file);
 }
 
 void Sound::Play(int times) {
