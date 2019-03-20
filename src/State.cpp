@@ -1,6 +1,8 @@
 #include "State.hpp"
 #include "Face.hpp"
 #include "Sprite.hpp"
+#include "TileSet.hpp"
+#include "TileMap.hpp"
 #include "Sound.hpp"
 #include <string>
 #include <cmath>
@@ -18,6 +20,12 @@ State::State() : quitRequested(false) {
 
     go->AddComponent(background);
     objects.emplace_back(go);
+
+    GameObject* mapGo = new GameObject();
+	tileSet = new TileSet(64, 64, "assets/img/tileset.png");
+    TileMap* map = new TileMap(*mapGo, "assets/map/tileMap.txt", tileSet);
+    mapGo->AddComponent(map);
+	objects.emplace_back(mapGo);
 }
 
 State::~State() {

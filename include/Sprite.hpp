@@ -28,6 +28,8 @@ class Sprite : public Component {
 
         bool Is(const std::string& type) const override;
 
+        void Render(int x, int y);
+
         void Render() override;
 
         int GetWidth() const;

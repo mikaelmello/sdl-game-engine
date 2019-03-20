@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include "GameObject.hpp"
+#include "TileSet.hpp"
 #include "Sprite.hpp"
 #include "Music.hpp"
 
@@ -32,6 +33,7 @@ class State {
 
         std::vector<std::unique_ptr<GameObject>> objects;
         Music music;
+        TileSet* tileSet;
         bool quitRequested;
 };
 

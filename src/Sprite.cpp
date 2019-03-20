@@ -31,12 +31,16 @@ void Sprite::SetClip(int x, int y, int w, int h) {
     clipRect = { x, y, w, h };
 }
 
-void Sprite::Render() {
-    SDL_Rect temp_rect = { (int) associated.box.x, (int) associated.box.y, clipRect.w, clipRect.h };
+void Sprite::Render(int x, int y) {
+    SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
     int return_code = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
     }
+}
+
+void Sprite::Render() {
+    Render((int) associated.box.x, (int) associated.box.y);
 }
 
 void Sprite::Update(float dt) {}
