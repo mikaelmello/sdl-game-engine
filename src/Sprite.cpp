@@ -6,6 +6,7 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include "Resources.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -15,23 +16,10 @@ Sprite::Sprite(GameObject& associated, const std::string& file) : Sprite(associa
     Open(file);
 }
 
-Sprite::~Sprite() {
-    if (texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    }
-}
+Sprite::~Sprite() {}
 
 void Sprite::Open(const std::string& file) {
-    if (texture != nullptr) {
-        SDL_DestroyTexture(texture);
-    }
-
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-
-    if (texture == nullptr) {
-        throw std::runtime_error("Could not load texture from file " + file + ": " + IMG_GetError());
-    }
-
+    texture = Resources::GetImage(file);
     int return_code = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     if (return_code != 0) {
         throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());

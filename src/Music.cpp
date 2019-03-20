@@ -2,6 +2,7 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 #include "Music.hpp"
+#include "Resources.hpp"
 #include <string>
 #include <stdexcept>
 
@@ -12,10 +13,7 @@ Music::Music(const std::string& file) : Music() {
 }
 
 void Music::Open(const std::string& file) {
-    music = Mix_LoadMUS(file.c_str());
-    if (music == nullptr) {
-        throw std::runtime_error("Could not load music from file " + file + ": " + Mix_GetError());
-    }
+    music = Resources::GetMusic(file);
 }
 
 void Music::Play(int times) {
@@ -41,8 +39,4 @@ bool Music::IsOpen() const {
     return music != nullptr;
 }
 
-Music::~Music() {
-    if (music != nullptr) {
-        Mix_FreeMusic(music);
-    }
-}
+Music::~Music() {}
