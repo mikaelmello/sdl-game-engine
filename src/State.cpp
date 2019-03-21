@@ -17,16 +17,16 @@ State::State() : quitRequested(false) {
     go->box.h = background->GetHeight();
 
     music.Open("assets/audio/stageState.ogg");
-	music.Play();
+    music.Play();
 
     go->AddComponent(background);
     objects.emplace_back(go);
 
     GameObject* mapGo = new GameObject();
-	tileSet = new TileSet(64, 64, "assets/img/tileset.png");
+    tileSet = new TileSet(64, 64, "assets/img/tileset.png");
     TileMap* map = new TileMap(*mapGo, "assets/map/tileMap.txt", tileSet);
     mapGo->AddComponent(map);
-	objects.emplace_back(mapGo);
+    objects.emplace_back(mapGo);
 }
 
 State::~State() {
@@ -37,13 +37,13 @@ void State::LoadAssets() {
 }
 
 void State::Update(float dt) {
-	InputManager& im = InputManager::GetInstance();
-	quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
+    InputManager& im = InputManager::GetInstance();
+    quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 
-	if (im.KeyPress(SPACE_BAR_KEY)) {
-		Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX(), im.GetMouseY());
+    if (im.KeyPress(SPACE_BAR_KEY)) {
+        Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX(), im.GetMouseY());
         AddObject((int)objPos.x, (int)objPos.y);
-	}
+    }
 
     std::for_each(
         objects.begin(),
