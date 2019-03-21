@@ -27,8 +27,6 @@ class State {
 
         void Render();
     private:
-        void Input();
-
         void AddObject(int mouseX, int mouseY);
 
         std::vector<std::unique_ptr<GameObject>> objects;

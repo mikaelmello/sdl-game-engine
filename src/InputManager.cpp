@@ -21,7 +21,6 @@ InputManager::~InputManager() {}
 
 void InputManager::Update() {
 	SDL_Event event;
-	int mouseX, mouseY;
     updateCounter += 1;
 
 	SDL_GetMouseState(&mouseX, &mouseY);
@@ -32,8 +31,8 @@ void InputManager::Update() {
 		} else if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) {
             mouseState[event.button.button] = event.type == SDL_MOUSEBUTTONDOWN;
             mouseUpdate[event.button.button] = updateCounter;
-		} else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
-			keyState[event.key.keysym.sym] = event.type == SDL_MOUSEBUTTONDOWN;
+		} else if (!event.key.repeat && (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)) {
+			keyState[event.key.keysym.sym] = event.type == SDL_KEYDOWN;
             keyUpdate[event.key.keysym.sym] = updateCounter;
 		}
 	}
