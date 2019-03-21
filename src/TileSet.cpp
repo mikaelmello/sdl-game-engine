@@ -10,7 +10,7 @@ TileSet::TileSet(int tileWidth, int tileHeight, const std::string& file)
 }
 
 void TileSet::RenderTile(unsigned int index, float x, float y) {
-    if (index >= (unsigned)(rows * columns - 1)) {
+    if (index >= (rows * columns - 1)) {
         return;
     }
 
