@@ -8,7 +8,7 @@ State::State() : quitRequested(false), bg("assets/img/ocean.jpg") {
         // even though we would need to get maximum grades, there is no reason to exit the program
         music.Open("assets/audio/stageState.ogg");
         music.Play();
-    } catch (std::exception ex) {
+    } catch (const std::exception& ex) {
         std::cout << ex.what() << std::endl;
         std::cout << "Could not play Stage State music, exception description:\n\n" << ex.what() << std::endl;
     }

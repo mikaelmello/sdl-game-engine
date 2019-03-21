@@ -7,7 +7,7 @@ int main (int argc, char** argv) {
     try {
         Game game = Game::GetInstance();
         game.Run();
-    } catch (std::exception ex) {
+    } catch (const std::exception& ex) {
         std::cout << "Game crashed\n\n" << std::endl;
         std::cout << "Exception: " << ex.what() << std::endl;
         std::cout << "SDL Error: " << SDL_GetError() << std::endl;
