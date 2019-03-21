@@ -6,6 +6,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Sprite.hpp"
+#include "GameObject.hpp"
 #include <string>
 
 class TileSet {
@@ -19,7 +20,7 @@ class TileSet {
         int GetTileHeight();
 
     private:
-
+        GameObject gameObject;
         Sprite tileSet;
 
         int rows;

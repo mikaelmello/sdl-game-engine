@@ -2,7 +2,7 @@
 #include <iostream>
 
 TileSet::TileSet(int tileWidth, int tileHeight, const std::string& file) 
- : tileSet(*(new GameObject()), file), tileWidth(tileWidth), tileHeight(tileHeight) {
+ : tileSet(gameObject, file), tileWidth(tileWidth), tileHeight(tileHeight) {
     if (tileSet.IsOpen()) {
         rows = tileSet.GetHeight() / tileHeight;
         columns = tileSet.GetWidth() / tileWidth;
