@@ -121,12 +121,12 @@ bool State::QuitRequested() const {
 
 void State::AddObject(int mouseX, int mouseY) {
     GameObject* go = new GameObject();
-    go->box.x = (float) mouseX;
-    go->box.y = (float) mouseY;
-
     Sprite* penguinSprite = new Sprite(*go, "assets/img/penguinface.png");
-    go->box.w = penguinSprite->GetWidth();
-    go->box.h = penguinSprite->GetHeight();
+
+    go->box.x = (float) mouseX - (float) penguinSprite->GetWidth() / 2;
+    go->box.y = (float) mouseY - (float) penguinSprite->GetHeight() / 2;
+    go->box.w = (float) penguinSprite->GetWidth();
+    go->box.h = (float) penguinSprite->GetHeight();
 
     Sound* penguinSound = new Sound(*go, "assets/audio/boom.wav");
     Face* penguinFace = new Face(*go);
