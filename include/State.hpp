@@ -5,7 +5,6 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include <string>
 #include "Sprite.hpp"
 #include "Music.hpp"
 

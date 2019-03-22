@@ -1,11 +1,10 @@
+#define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
-
 #include "Game.hpp"
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
 Game* Game::instance = nullptr;
 

@@ -3,7 +3,6 @@
 #include "SDL_include.h"
 #include "Music.hpp"
 #include <string>
-#include <iostream>
 #include <stdexcept>
 
 Music::Music() : music(nullptr) {}

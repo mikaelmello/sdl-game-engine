@@ -6,9 +6,8 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #define INCLUDE_SDL
-
-#include <string>
 #include "SDL_include.h"
+#include <string>
 
 class Sprite {
     public:
