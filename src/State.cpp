@@ -42,7 +42,7 @@ void State::Update(float dt) {
     quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 
     if (im.KeyPress(SPACE_BAR_KEY)) {
-        Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX(), im.GetMouseY());
+        Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX() + Camera::pos.x, im.GetMouseY() + Camera::pos.y);
         AddObject((int)objPos.x, (int)objPos.y);
     }
 

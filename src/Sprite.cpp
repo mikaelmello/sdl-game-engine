@@ -6,6 +6,7 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include "Camera.hpp"
 #include "Resources.hpp"
 #include <stdexcept>
 #include <string>
@@ -40,7 +41,7 @@ void Sprite::Render(int x, int y) {
 }
 
 void Sprite::Render() {
-    Render((int) associated.box.x, (int) associated.box.y);
+    Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
 void Sprite::Update(float dt) {}
