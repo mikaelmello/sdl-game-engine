@@ -6,11 +6,10 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #define INCLUDE_SDL
-
-#include <string>
 #include "SDL_include.h"
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include <string>
 
 class Sprite : public Component {
     public:

@@ -1,10 +1,14 @@
 #include "State.hpp"
 #include "Face.hpp"
 #include "Sprite.hpp"
+#include "GameObject.hpp"
+#include "Vec2.hpp"
 #include "Sound.hpp"
+#include "Music.hpp"
 #include <string>
 #include <cmath>
 #include <algorithm>
+#include <memory>
 
 State::State() : quitRequested(false) {
     GameObject* go = new GameObject();
@@ -86,14 +90,14 @@ void State::Update(float dt) {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](auto&& go) { go->Update(dt); }
+        [&](std::unique_ptr<GameObject>& go) { go->Update(dt); }
     );
 
     objects.erase(
         std::remove_if(
             objects.begin(),
             objects.end(),
-            [](auto&& go) { return go->IsDead(); }
+            [](std::unique_ptr<GameObject>& go) { return go->IsDead(); }
         ),
         objects.end()
     );
@@ -103,7 +107,7 @@ void State::Render() {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](auto&& go) { go->Render(); }
+        [&](std::unique_ptr<GameObject>& go) { go->Render(); }
     );
 }
 

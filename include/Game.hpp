@@ -6,10 +6,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #define INCLUDE_SDL
-
-#include <string>
 #include "SDL_include.h"
 #include "State.hpp"
+#include <string>
 
 class Game {
     public:

@@ -5,11 +5,11 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#include "Component.hpp"
+#include "Rect.hpp"
 #include <string>
 #include <vector>
 #include <memory>
-#include "Component.hpp"
-#include "Rect.hpp"
 
 class GameObject {
     public:

@@ -5,12 +5,12 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include <string>
-#include <vector>
-#include <memory>
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Music.hpp"
+#include <string>
+#include <vector>
+#include <memory>
 
 class State {
     public:
