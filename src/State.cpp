@@ -6,6 +6,7 @@
 #include "InputManager.hpp"
 #include "Sound.hpp"
 #include "Camera.hpp"
+#include "CameraFollower.hpp"
 #include <string>
 #include <cmath>
 #include <algorithm>
@@ -13,6 +14,7 @@
 State::State() : quitRequested(false) {
     GameObject* go = new GameObject();
 
+    CameraFollower* backgroundFixer = new CameraFollower(*go);
     Sprite* background = new Sprite(*go, "assets/img/ocean.jpg");
     go->box.w = background->GetWidth();
     go->box.h = background->GetHeight();
@@ -20,6 +22,7 @@ State::State() : quitRequested(false) {
     music.Open("assets/audio/stageState.ogg");
     music.Play();
 
+    go->AddComponent(backgroundFixer);
     go->AddComponent(background);
     objects.emplace_back(go);
 
