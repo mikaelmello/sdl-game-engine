@@ -5,13 +5,11 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#define INCLUDE_SDL
 #define INCLUDE_SDL_MIXER
-
-#include <string>
 #include "SDL_include.h"
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include <string>
 
 class Sound : public Component {
     public:

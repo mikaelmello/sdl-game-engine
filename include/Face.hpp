@@ -5,10 +5,9 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-#include <string>
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include <string>
 
 class Face : public Component {
     public:

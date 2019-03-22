@@ -1,4 +1,5 @@
 #include "GameObject.hpp"
+#include "Component.hpp"
 #include <memory>
 #include <vector>
 #include <algorithm>
@@ -13,7 +14,7 @@ void GameObject::Update(float dt) {
     std::for_each(
         components.begin(),
         components.end(),
-        [&](auto&& cpt) { cpt->Update(dt); }
+        [&](std::unique_ptr<Component>& cpt) { cpt->Update(dt); }
     );
 }
 
@@ -21,7 +22,7 @@ void GameObject::Render() {
     std::for_each(
         components.begin(),
         components.end(),
-        [&](auto&& cpt) { cpt->Render(); }
+        [&](std::unique_ptr<Component>& cpt) { cpt->Render(); }
     );
 }
 
@@ -39,7 +40,7 @@ void GameObject::AddComponent(Component* cpt) {
 
 void GameObject::RemoveComponent(Component* cpt) {
     auto it = std::find_if(components.begin(), components.end(),
-        [&](std::unique_ptr<Component>& obj){ return obj.get() == cpt; });
+        [&](std::unique_ptr<Component>& cpt2){ return cpt2.get() == cpt; });
 
     if (it != components.end()) {
         components.erase(it);
@@ -48,7 +49,7 @@ void GameObject::RemoveComponent(Component* cpt) {
 
 Component* GameObject::GetComponent(const std::string& type) {
     auto it = std::find_if(components.begin(), components.end(),
-        [&](std::unique_ptr<Component>& obj){ return obj->Is(type); });
+        [&](std::unique_ptr<Component>& cpt2){ return cpt2->Is(type); });
 
     if (it == components.end()) {
         return nullptr;

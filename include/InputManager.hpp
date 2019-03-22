@@ -14,6 +14,8 @@
 #define LEFT_MOUSE_BUTTON   SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON  SDL_BUTTON_RIGHT
 
+#define INCLUDE_SDL
+#include "SDL_include.h"
 #include <string>
 #include <unordered_map>
 

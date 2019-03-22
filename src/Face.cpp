@@ -2,6 +2,7 @@
 #include "Sound.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
+#include "GameObject.hpp"
 #include <string>
 
 Face::Face(GameObject& associated) : Component(associated), hitpoints(30) {}

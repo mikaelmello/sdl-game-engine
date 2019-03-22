@@ -6,11 +6,10 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #define INCLUDE_SDL
-
-#include <string>
 #include "SDL_include.h"
 #include "Vec2.hpp"
 #include "State.hpp"
+#include <string>
 
 class Game {
     public:

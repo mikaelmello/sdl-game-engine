@@ -1,4 +1,5 @@
 #define SDL_INCLUDE_MIXER
+#define SDL_INCLUDE_IMAGE
 #include "SDL_include.h"
 #include "Resources.hpp"
 #include "Game.hpp"
@@ -81,7 +82,7 @@ void Resources::ClearSounds() {
     std::for_each(
         soundTable.begin(),
         soundTable.end(),
-        [](std::unordered_map<std::string, Mix_Chunk*>::value_type item) { Mix_FreeChunk(item.second); }
+        [](std::pair<const std::string, Mix_Chunk*> item) { Mix_FreeChunk(item.second); }
     );
 
     soundTable.clear();

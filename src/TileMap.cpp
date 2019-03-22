@@ -2,11 +2,11 @@
 #include "TileSet.hpp"
 #include "Helpers.hpp"
 #include "Camera.hpp"
+#include "Component.hpp"
 #include "GameObject.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <utility>
 
 TileMap::TileMap(GameObject& associated, const std::string& file, TileSet* tileSet) : Component(associated), tileSet(tileSet) {
     Load(file);
