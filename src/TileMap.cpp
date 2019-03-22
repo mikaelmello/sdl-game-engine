@@ -1,6 +1,7 @@
 #include "TileMap.hpp"
 #include "TileSet.hpp"
 #include "Helpers.hpp"
+#include "Camera.hpp"
 #include "GameObject.hpp"
 #include <string>
 #include <fstream>
@@ -56,8 +57,8 @@ int& TileMap::At(int x, int y, int z) {
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
     for (int i = 0; i < mapWidth; i++) {
         for (int j = 0; j < mapHeight; j++) {
-            int x = i * tileSet->GetTileWidth();
-            int y = j * tileSet->GetTileHeight();   
+            int x = i * tileSet->GetTileWidth() - cameraX;
+            int y = j * tileSet->GetTileHeight() - cameraY;
             tileSet->RenderTile((unsigned)At(i, j, layer), x, y);
         }
     }
@@ -65,7 +66,7 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
 
 void TileMap::Render() {
     for (int i = 0; i < mapDepth; i++) {
-        RenderLayer(i, associated.box.x, associated.box.y);
+        RenderLayer(i, Camera::pos.x, Camera::pos.y);
     }
 }
 

@@ -9,6 +9,7 @@
 
 #include <string>
 #include "SDL_include.h"
+#include "Vec2.hpp"
 #include "State.hpp"
 
 class Game {
@@ -24,6 +25,10 @@ class Game {
         static Game& GetInstance();        
 
         float GetDeltaTime() const;
+
+        int GetWidth() const;
+
+        int GetHeight() const;
     private:
         Game(const std::string& title, int width, int height);
 
@@ -40,6 +45,10 @@ class Game {
         int frameStart;
 
         float dt;
+
+        int width;
+
+        int height;
 };
 
 #endif

@@ -7,10 +7,11 @@
 #include "Resources.hpp"
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 Game* Game::instance = nullptr;
 
-Game::Game(const std::string& title, int width, int height) {
+Game::Game(const std::string& title, int width, int height) : frameStart(0), dt(0), width(width), height(height) {
     if (instance == nullptr) {
         instance = this;
     } else {
@@ -82,6 +83,7 @@ SDL_Renderer* Game::GetRenderer() {
 void Game::Run() {
     while (!state->QuitRequested()) {
         InputManager::GetInstance().Update();
+        CalculateDeltaTime();
         state->Update(GetDeltaTime());
         state->Render();
         SDL_RenderPresent(renderer);
@@ -101,4 +103,12 @@ void Game::CalculateDeltaTime() {
 
 float Game::GetDeltaTime() const {
     return dt;
+}
+
+int Game::GetWidth() const {
+    return width;
+}
+
+int Game::GetHeight() const {
+    return height;
 }

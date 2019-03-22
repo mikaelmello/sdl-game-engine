@@ -5,6 +5,7 @@
 #include "TileMap.hpp"
 #include "InputManager.hpp"
 #include "Sound.hpp"
+#include "Camera.hpp"
 #include <string>
 #include <cmath>
 #include <algorithm>
@@ -44,6 +45,8 @@ void State::Update(float dt) {
         Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX(), im.GetMouseY());
         AddObject((int)objPos.x, (int)objPos.y);
     }
+
+    Camera::Update(dt);
 
     std::for_each(
         objects.begin(),

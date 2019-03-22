@@ -25,7 +25,7 @@ class Vec2 {
 
         Vec2& operator+=(const Vec2& rhs);
         Vec2& operator-=(const Vec2& rhs);
-        Vec2& operator*=(const int& rhs);
+        Vec2& operator*=(const float& rhs);
         Vec2& operator=(const Vec2& rhs);
 
         friend Vec2 operator+(Vec2 lhs, const Vec2& rhs) {
@@ -38,12 +38,12 @@ class Vec2 {
             return lhs;
         }
         
-        friend Vec2 operator*(Vec2 lhs, const int& rhs) {
+        friend Vec2 operator*(Vec2 lhs, const float& rhs) {
             lhs *= rhs;
             return lhs;
         }
 
-        friend Vec2 operator*(const int& lhs, Vec2 rhs) {
+        friend Vec2 operator*(const float& lhs, Vec2 rhs) {
             rhs *= lhs;
             return rhs;
         }
