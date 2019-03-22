@@ -7,6 +7,7 @@
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include "Resources.hpp"
+#include "Component.hpp"
 #include <stdexcept>
 #include <string>
 

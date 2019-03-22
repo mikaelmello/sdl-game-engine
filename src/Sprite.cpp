@@ -7,6 +7,7 @@
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include "Resources.hpp"
+#include "Component.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -60,4 +61,3 @@ int Sprite::GetHeight() const {
 bool Sprite::IsOpen() const {
     return texture != nullptr;
 }
-

@@ -1,5 +1,6 @@
 #include "Face.hpp"
 #include "Sound.hpp"
+#include "GameObject.hpp"
 #include <string>
 
 Face::Face(GameObject& associated) : Component(associated), hitpoints(30) {}
