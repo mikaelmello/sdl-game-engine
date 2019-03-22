@@ -23,8 +23,11 @@ class Game {
 
         static Game& GetInstance();        
 
+        float GetDeltaTime() const;
     private:
         Game(const std::string& title, int width, int height);
+
+        void CalculateDeltaTime();
 
         static Game* instance;
 
@@ -33,6 +36,10 @@ class Game {
         SDL_Renderer* renderer;
 
         State* state;
+
+        int frameStart;
+
+        float dt;
 };
 
 #endif
