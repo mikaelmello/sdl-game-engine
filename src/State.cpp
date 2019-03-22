@@ -29,6 +29,7 @@ State::State() : quitRequested(false) {
     GameObject* mapGo = new GameObject();
     tileSet = new TileSet(64, 64, "assets/img/tileset.png");
     TileMap* map = new TileMap(*mapGo, "assets/map/tileMap.txt", tileSet);
+    map->SetParallax(1, 0.5, 0.5);
     mapGo->AddComponent(map);
     objects.emplace_back(mapGo);
 }

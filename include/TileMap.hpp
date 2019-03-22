@@ -8,6 +8,7 @@
 #include "Component.hpp"
 #include "GameObject.hpp"
 #include "TileSet.hpp"
+#include "Vec2.hpp"
 #include <string>
 #include <vector>
 
@@ -35,8 +36,10 @@ class TileMap : public Component {
 
         int GetDepth();
     
+        void SetParallax(int layer, float xFactor, float yFactor);
     private:
         std::vector<int> tileMatrix;
+        std::vector<Vec2> layerParallax;
         TileSet* tileSet;
         int mapWidth;
         int mapHeight;

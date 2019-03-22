@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <utility>
 
 TileMap::TileMap(GameObject& associated, const std::string& file, TileSet* tileSet) : Component(associated), tileSet(tileSet) {
     Load(file);
@@ -39,10 +39,23 @@ void TileMap::Load(const std::string& file) {
         int number = std::stoi(line);
         tileMatrix.push_back(number - 1);
     }
+
+    // default parallax factor
+    for (int i = 0; i < mapDepth; i++) {
+        layerParallax.push_back({0, 0});
+    }
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
     tileSet = tileSet;
+}
+
+void TileMap::SetParallax(int layer, float xFactor, float yFactor) {
+    if (layer < 0 || layer >= mapDepth) {
+        throw std::invalid_argument("Invalid layer to add parallax factors");
+    }
+
+    layerParallax[layer] = { xFactor, yFactor };
 }
 
 int& TileMap::At(int x, int y, int z) {
@@ -57,8 +70,8 @@ int& TileMap::At(int x, int y, int z) {
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
     for (int i = 0; i < mapWidth; i++) {
         for (int j = 0; j < mapHeight; j++) {
-            int x = i * tileSet->GetTileWidth() - cameraX;
-            int y = j * tileSet->GetTileHeight() - cameraY;
+            int x = i * tileSet->GetTileWidth() - cameraX - cameraX * layerParallax[layer].x;
+            int y = j * tileSet->GetTileHeight() - cameraY - cameraY * layerParallax[layer].y;
             tileSet->RenderTile((unsigned)At(i, j, layer), x, y);
         }
     }
