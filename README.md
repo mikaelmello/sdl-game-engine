@@ -20,8 +20,8 @@ $ ./engine
 ### From the zip file sent to Aprender
 
 ```bash
-$ unzip 160015537_T3.zip -d 160015537_T3
-$ cd 160015537_T3
+$ unzip 160015537_T4.zip -d 160015537_T4
+$ cd 160015537_T4
 $ cp -a <your-assets-directory-path> assets
 $ make
 $ ./engine
