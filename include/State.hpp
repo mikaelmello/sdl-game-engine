@@ -33,7 +33,6 @@ class State {
 
         void Render();
     private:
-        void AddPenguim(int mouseX, int mouseY);
         std::vector<std::shared_ptr<GameObject>> objects;
         bool started;
         Music music;

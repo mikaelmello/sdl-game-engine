@@ -1,5 +1,4 @@
 #include "State.hpp"
-#include "Face.hpp"
 #include "Sprite.hpp"
 #include "TileSet.hpp"
 #include "TileMap.hpp"
@@ -62,11 +61,6 @@ void State::Update(float dt) {
     InputManager& im = InputManager::GetInstance();
     quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 
-    if (im.KeyPress(SPACE_BAR_KEY)) {
-        Vec2 objPos = Vec2(200, 0).GetRotated( -M_PI + M_PI*(rand() % 1001)/500.0 ) + Vec2(im.GetMouseX() + Camera::pos.x, im.GetMouseY() + Camera::pos.y);
-        AddPenguim((int)objPos.x, (int)objPos.y);
-    }
-
     Camera::Update(dt);
 
     std::for_each(
@@ -117,23 +111,4 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
     }
 
     return std::weak_ptr<GameObject>(*it);
-}
-
-void State::AddPenguim(int mouseX, int mouseY) {
-    GameObject* go = new GameObject();
-    Sprite* penguinSprite = new Sprite(*go, "assets/img/penguinface.png");
-
-    go->box.x = (float) mouseX - (float) penguinSprite->GetWidth() / 2;
-    go->box.y = (float) mouseY - (float) penguinSprite->GetHeight() / 2;
-    go->box.w = (float) penguinSprite->GetWidth();
-    go->box.h = (float) penguinSprite->GetHeight();
-
-    Sound* penguinSound = new Sound(*go, "assets/audio/boom.wav");
-    Face* penguinFace = new Face(*go);
-
-    go->AddComponent(penguinSprite);
-    go->AddComponent(penguinSound);
-    go->AddComponent(penguinFace);
-
-    objects.emplace_back(go);
 }
