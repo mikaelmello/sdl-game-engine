@@ -4,10 +4,18 @@
 #include <vector>
 #include <algorithm>
 
-GameObject::GameObject() : isDead(false) {}
+GameObject::GameObject() : isDead(false) , started(false) {}
 
 GameObject::~GameObject() {
     components.clear();
+}
+
+void GameObject::Start() {
+    std::for_each(
+        components.begin(),
+        components.end(),
+        [&](std::unique_ptr<Component>& cpt) { cpt->Start(); }
+    );
 }
 
 void GameObject::Update(float dt) {

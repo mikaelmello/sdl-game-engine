@@ -21,6 +21,8 @@ class GameObject {
 
         void Render();
 
+        void Start();
+
         bool IsDead() const;
 
         void RequestDelete();
@@ -35,6 +37,7 @@ class GameObject {
     private:
         std::vector<std::unique_ptr<Component>> components;
         bool isDead;
+        bool started;
 
 };
 

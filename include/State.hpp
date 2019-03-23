@@ -19,6 +19,12 @@ class State {
 
         ~State();
 
+        void Start();
+
+        std::weak_ptr<GameObject> AddObject(GameObject* go);
+
+        std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+
         bool QuitRequested() const;
 
         void LoadAssets();
@@ -27,9 +33,9 @@ class State {
 
         void Render();
     private:
-        void AddObject(int mouseX, int mouseY);
-
-        std::vector<std::unique_ptr<GameObject>> objects;
+        void AddPenguim(int mouseX, int mouseY);
+        std::vector<std::shared_ptr<GameObject>> objects;
+        bool started;
         Music music;
         TileSet* tileSet;
         bool quitRequested;
