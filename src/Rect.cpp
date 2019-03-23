@@ -12,7 +12,7 @@ float Rect::Distance(const Rect& rect) const {
 }
 
 Vec2 Rect::Center() const {
-    return Vec2((x+w)/2, (y+h)/2);
+    return Vec2(x+w/2, y+h/2);
 }
 
 bool Rect::Contains(const Vec2& point) const {
