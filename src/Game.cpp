@@ -7,7 +7,6 @@
 #include "Resources.hpp"
 #include <string>
 #include <stdexcept>
-#include <iostream>
 
 Game* Game::instance = nullptr;
 

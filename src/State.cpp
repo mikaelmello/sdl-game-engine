@@ -8,6 +8,7 @@
 #include "CameraFollower.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
+#include "Alien.hpp"
 #include "Vec2.hpp"
 #include "Music.hpp"
 #include <string>
@@ -36,6 +37,13 @@ State::State() : quitRequested(false), started(false) {
     map->SetParallax(1, 0.5, 0.5);
     mapGo->AddComponent(map);
     objects.emplace_back(mapGo);
+
+    GameObject* alienGo = new GameObject();
+    alienGo->box.x = 512;
+    alienGo->box.y = 300;
+    Alien* alien = new Alien(*alienGo, 0);
+    alienGo->AddComponent(alien);
+    objects.emplace_back(alienGo);
 }
 
 void State::Start() {
