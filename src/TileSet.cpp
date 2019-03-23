@@ -1,5 +1,4 @@
 #include "TileSet.hpp"
-#include <iostream>
 
 TileSet::TileSet(int tileWidth, int tileHeight, const std::string& file) 
  : tileSet(gameObject, file), tileWidth(tileWidth), tileHeight(tileHeight) {
