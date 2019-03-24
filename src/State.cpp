@@ -18,15 +18,8 @@
 
 State::State() : quitRequested(false) {
     GameObject* go = new GameObject();
-
     CameraFollower* backgroundFixer = new CameraFollower(*go);
     Sprite* background = new Sprite(*go, "assets/img/ocean.jpg");
-    go->box.w = background->GetWidth();
-    go->box.h = background->GetHeight();
-
-    music.Open("assets/audio/stageState.ogg");
-    music.Play();
-
     go->AddComponent(backgroundFixer);
     go->AddComponent(background);
     objects.emplace_back(go);
@@ -36,7 +29,10 @@ State::State() : quitRequested(false) {
     TileMap* map = new TileMap(*mapGo, "assets/map/tileMap.txt", tileSet);
     map->SetParallax(1, 0.5, 0.5);
     mapGo->AddComponent(map);
-    objects.emplace_back(mapGo);
+	objects.emplace_back(mapGo);
+
+    music.Open("assets/audio/stageState.ogg");
+	music.Play();
 }
 
 State::~State() {
