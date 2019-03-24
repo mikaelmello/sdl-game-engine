@@ -2,18 +2,40 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 #include "InputManager.hpp"
+#include "Game.hpp"
+#include "State.hpp"
+#include "Vec2.hpp"
 #include "Camera.hpp"
+#include "Minion.hpp"
 #include <string>
+#include <memory>
+#include <cmath>
 #include <queue>
+#include <iostream>
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated) {
+Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     associated.AddComponent(sprite);
 }
 
-Alien::~Alien() {}
+Alien::~Alien() {
+    minions.clear();
+}
 
-void Alien::Start() {}
+void Alien::Start() {
+    Game& game = Game::GetInstance();
+    State& state = game.GetState();
+
+    for (int i = 0; i < nMinions; i++) {
+        GameObject* minionGo = new GameObject();
+        float arc = M_PI * 2 * i / nMinions;
+        Minion* minion = new Minion(*minionGo, state.GetObjectPtr(&associated), arc);
+        minionGo->AddComponent(minion);
+        
+        std::weak_ptr<GameObject> minionGoSharedPtr = state.AddObject(minionGo);
+        minions.push_back(minionGoSharedPtr);
+    }
+}
 
 void Alien::Update(float dt) {
     if (hp <= 0) {
@@ -24,8 +46,8 @@ void Alien::Update(float dt) {
     InputManager& im = InputManager::GetInstance();
 
     Vec2 mousePos = {
-        im.GetMouseX() - Camera::pos.x,
-        im.GetMouseY() - Camera::pos.y,
+        im.GetMouseX() + Camera::pos.x,
+        im.GetMouseY() + Camera::pos.y,
     };
 
 

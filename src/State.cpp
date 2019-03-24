@@ -41,7 +41,7 @@ State::State() : quitRequested(false), started(false) {
     GameObject* alienGo = new GameObject();
     alienGo->box.x = 512;
     alienGo->box.y = 300;
-    Alien* alien = new Alien(*alienGo, 0);
+    Alien* alien = new Alien(*alienGo, 4);
     alienGo->AddComponent(alien);
     objects.emplace_back(alienGo);
 }
