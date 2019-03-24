@@ -34,6 +34,7 @@ class State {
         void Render();
     private:
         std::vector<std::shared_ptr<GameObject>> objects;
+        std::vector<std::shared_ptr<GameObject>> newObjects;
         bool started;
         Music music;
         TileSet* tileSet;

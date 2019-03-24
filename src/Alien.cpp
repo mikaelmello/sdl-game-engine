@@ -11,7 +11,6 @@
 #include <memory>
 #include <cmath>
 #include <queue>
-#include <iostream>
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
@@ -66,7 +65,7 @@ void Alien::Update(float dt) {
             Vec2 curPos = associated.box.Center();
             Vec2 tarPos = act.pos;
             Vec2 direction = tarPos - curPos;
-            Vec2 movement = Vec2(distanceToMove, 0).GetRotated(-direction.XAxisInclination());
+            Vec2 movement = Vec2(distanceToMove, 0).GetRotated(direction.XAxisInclination());
 
             if (curPos.Distance(tarPos) < distanceToMove) {
                 associated.box.x = tarPos.x - associated.box.w / 2;
@@ -77,6 +76,19 @@ void Alien::Update(float dt) {
                 associated.box.y += movement.y;
             }
         } else if (act.type == Action::SHOOT) {
+            float minDistance = 1e15; // arbitrarily large number
+            int minionIndex = -1;
+
+            for (int i = 0; i < nMinions; i++) {
+                std::shared_ptr<GameObject> minion = minions[i].lock();
+                float distance = mousePos.Distance(minion->box.Center());
+                if (distance <= minDistance) {
+                    minDistance = distance;
+                    minionIndex = i;
+                }
+            }
+            Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
+            minion->Shoot(mousePos);
             taskQueue.pop();
         }
     }

@@ -56,6 +56,7 @@ void State::Start() {
 
 State::~State() {
     objects.clear();
+    newObjects.clear();
 }
 
 void State::LoadAssets() {
@@ -66,6 +67,17 @@ void State::Update(float dt) {
     quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
 
     Camera::Update(dt);
+
+    // Since we are using iterators everywhere to iterate through the
+    // vectors, we can't add objects in State::AddObject directly into
+    // 'objects'. State::AddObject is called from inside a Update function
+    // thus adding a new GameObject while we are iterating through the array,
+    // potentially invalidating the iterators and causing a segmentation fault.
+    //
+    // We add a temporary vector to store new objects and copy then before
+    // starting a new set of iterations
+    objects.insert(objects.end(), newObjects.begin(), newObjects.end());
+    newObjects.clear();
 
     std::for_each(
         objects.begin(),
@@ -97,7 +109,7 @@ bool State::QuitRequested() const {
 
 std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
     std::shared_ptr<GameObject> goSharedPtr(go);
-    objects.push_back(goSharedPtr);
+    newObjects.push_back(goSharedPtr);
 
     if (started) {
         goSharedPtr->Start();
