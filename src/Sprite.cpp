@@ -25,6 +25,9 @@ void Sprite::Open(const std::string& file) {
     if (return_code != 0) {
         throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());
     }
+
+    associated.box.w = width;
+    associated.box.h = height;
     SetClip(0, 0, width, height);
 }
 
