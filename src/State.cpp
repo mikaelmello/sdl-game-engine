@@ -12,16 +12,12 @@
 
 State::State() : quitRequested(false) {
     GameObject* go = new GameObject();
-
     Sprite* background = new Sprite(*go, "assets/img/ocean.jpg");
-    go->box.w = background->GetWidth();
-    go->box.h = background->GetHeight();
+    go->AddComponent(background);
+    objects.emplace_back(go);
 
     music.Open("assets/audio/stageState.ogg");
 	music.Play();
-
-    go->AddComponent(background);
-    objects.emplace_back(go);
 }
 
 State::~State() {
