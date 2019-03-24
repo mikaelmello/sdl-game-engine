@@ -18,15 +18,8 @@
 
 State::State() : quitRequested(false), started(false) {
     GameObject* go = new GameObject();
-
     CameraFollower* backgroundFixer = new CameraFollower(*go);
     Sprite* background = new Sprite(*go, "assets/img/ocean.jpg");
-    go->box.w = background->GetWidth();
-    go->box.h = background->GetHeight();
-
-    music.Open("assets/audio/stageState.ogg");
-    music.Play();
-
     go->AddComponent(backgroundFixer);
     go->AddComponent(background);
     objects.emplace_back(go);
@@ -44,6 +37,9 @@ State::State() : quitRequested(false), started(false) {
     Alien* alien = new Alien(*alienGo, 4);
     alienGo->AddComponent(alien);
     objects.emplace_back(alienGo);
+
+    music.Open("assets/audio/stageState.ogg");
+	music.Play();
 }
 
 void State::Start() {
