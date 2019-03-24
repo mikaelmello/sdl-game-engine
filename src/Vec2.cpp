@@ -26,6 +26,7 @@ float Vec2::Distance(const Vec2& v) const {
 }
 
 float Vec2::XAxisInclination() const {
+    // Return negative value because the Y axis is inverted
     return -atan2(y, x);
 }
 
