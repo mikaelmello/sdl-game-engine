@@ -117,7 +117,7 @@ void State::AddObject(int mouseX, int mouseY) {
     Sound* penguinSound = new Sound(*go, "assets/audio/boom.wav");
     Face* penguinFace = new Face(*go);
 
-	go->box = go->box.GetCentered({ mouseX, mouseY });
+	go->box = go->box.GetCentered(mouseX, mouseY);
     go->AddComponent(penguinSprite);
     go->AddComponent(penguinSound);
     go->AddComponent(penguinFace);
