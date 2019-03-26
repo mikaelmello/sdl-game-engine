@@ -32,10 +32,10 @@ State::State() : quitRequested(false), started(false) {
     objects.emplace_back(mapGo);
 
     GameObject* alienGo = new GameObject();
-    alienGo->box.x = 512;
-    alienGo->box.y = 300;
     Alien* alien = new Alien(*alienGo, 4);
     alienGo->AddComponent(alien);
+    alienGo->box.x = 512 - alienGo->box.w / 2;
+    alienGo->box.y = 300 - alienGo->box.h / 2;
     objects.emplace_back(alienGo);
 
     music.Open("assets/audio/stageState.ogg");

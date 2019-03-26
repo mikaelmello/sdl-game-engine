@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cmath>
 #include <iterator>
 #include <memory>
 #include <algorithm>
@@ -40,4 +41,8 @@ std::vector<std::string> Helpers::split(const std::string& text,
 
 bool Helpers::is_whitespace(const std::string& s) {
   return std::all_of(s.begin(), s.end(), isspace);
+}
+
+float Helpers::rad_to_deg(float rad) {
+    return rad * 180 / M_PI;
 }

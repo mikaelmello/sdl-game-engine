@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include <string>
 
-Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr) {}
+Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr), scale(1, 1) {}
 
 Sprite::Sprite(GameObject& associated, const std::string& file) : Sprite(associated) {
     Open(file);
@@ -36,8 +36,8 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
-    int return_code = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect);
+    SDL_Rect temp_rect = { x, y, clipRect.w * scale.x, clipRect.h * scale.y };
+    int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
     }
@@ -63,4 +63,25 @@ int Sprite::GetHeight() const {
 
 bool Sprite::IsOpen() const {
     return texture != nullptr;
+}
+
+void Sprite::SetScaleX(float scaleX, float scaleY) {
+    Vec2 oldCenter = associated.box.Center();
+
+    if (scaleX != 0) {
+        scale.x = scaleX;
+        associated.box.w = width * scale.x;
+    }
+    if (scaleY != 0) {
+        scale.y = scaleY;
+        associated.box.h = height * scale.y;
+    }
+
+    Vec2 newCenter = associated.box.Center();
+    Vec2 difference = oldCenter - newCenter;
+    associated.box += difference;
+}
+
+Vec2 Sprite::GetScale() {
+    return scale;
 }

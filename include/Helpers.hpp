@@ -25,6 +25,8 @@ std::vector<std::string> split(const std::string& text, const std::string& delim
 
 bool is_whitespace(const std::string& s);
 
+float rad_to_deg(float rad);
+
 } // end namespace Helpers
 
 #endif

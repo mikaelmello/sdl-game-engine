@@ -30,7 +30,7 @@ class Rect {
 
         const std::string ToString() const {
             return std::string("x:") + std::to_string(x) + std::string(" y:") + std::to_string(y)
-                + std::string(" w:") + std::to_string(w) + std::string(" h:") + std::to_string(h);
+                + std::string(" w:") + std::to_string(w) + std::string(" h:") + std::to_string(h) + std::string(" center: ") + Center().ToString();
         }
 
         float x;

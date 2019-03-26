@@ -5,7 +5,9 @@
 #include "Game.hpp"
 #include "State.hpp"
 #include "Bullet.hpp"
+#include "Helpers.hpp"
 #include <string>
+#include <cmath>
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg) {
     Sprite* sprite = new Sprite(associated, "assets/img/minion.png");
@@ -21,12 +23,13 @@ void Minion::Update(float dt) {
     }
 
     float distanceToMove = MINION_SPEED * dt;
-    arc += distanceToMove;
+    arc = fmod(arc + distanceToMove, M_PI * 2);
     Vec2 movement = Vec2(MINION_DISTANCE, 0).GetRotated(arc);
     Vec2 newPos = alienCenterGo->box.Center() + movement;
 
     associated.box.x = newPos.x - associated.box.w/2;
     associated.box.y = newPos.y - associated.box.h/2;
+    associated.angleDeg = Helpers::rad_to_deg(arc);
 }
 
 void Minion::Render() {}
@@ -43,10 +46,11 @@ void Minion::Shoot(Vec2 target) {
     Vec2 direction = target - curPos;
 
     GameObject* go = new GameObject();
-    go->box.x = associated.box.x;
-    go->box.y = associated.box.y;
+
     Bullet* bullet = new Bullet(*go, direction.XAxisInclination(), 400, 30, 500, "assets/img/minionbullet1.png");
     go->AddComponent(bullet);
+    go->box.x = curPos.x - go->box.w / 2;
+    go->box.y = curPos.y - go->box.h / 2;
 
     state.AddObject(go);
 }

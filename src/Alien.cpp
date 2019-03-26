@@ -49,6 +49,7 @@ void Alien::Update(float dt) {
         im.GetMouseY() + Camera::pos.y,
     };
 
+    associated.angleDeg = fmod(associated.angleDeg + 10 * MINION_SPEED * dt, 360);
 
     if (im.MousePress(LEFT_MOUSE_BUTTON)) {
         taskQueue.emplace(Action::SHOOT, mousePos.x, mousePos.y);
@@ -81,14 +82,14 @@ void Alien::Update(float dt) {
 
             for (int i = 0; i < nMinions; i++) {
                 std::shared_ptr<GameObject> minion = minions[i].lock();
-                float distance = mousePos.Distance(minion->box.Center());
+                float distance = act.pos.Distance(minion->box.Center());
                 if (distance <= minDistance) {
                     minDistance = distance;
                     minionIndex = i;
                 }
             }
             Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
-            minion->Shoot(mousePos);
+            minion->Shoot(act.pos);
             taskQueue.pop();
         }
     }

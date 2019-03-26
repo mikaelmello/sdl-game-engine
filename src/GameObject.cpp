@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-GameObject::GameObject() : isDead(false) , started(false) {}
+GameObject::GameObject() : isDead(false) , started(false), angleDeg(0) {}
 
 GameObject::~GameObject() {
     components.clear();
