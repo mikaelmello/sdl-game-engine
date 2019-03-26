@@ -12,11 +12,15 @@ float Rect::Distance(const Rect& rect) const {
 }
 
 Vec2 Rect::Center() const {
-    return Vec2(x+w/2, y+h/2);
+    return Vec2(x + w/2, y + h/2);
 }
 
 Rect Rect::GetCentered(Vec2 pos) const {
-    return Rect(pos.x-w/2, pos.y-h/2, w, h);
+    return GetCentered(pos.x, pos.y);
+}
+
+Rect Rect::GetCentered(float centerX, float centerY) const {
+    return Rect(centerX - w/2, centerY - h/2, w, h);
 }
 
 bool Rect::Contains(const Vec2& point) const {
