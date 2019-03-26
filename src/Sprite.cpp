@@ -77,9 +77,7 @@ void Sprite::SetScaleX(float scaleX, float scaleY) {
         associated.box.h = height * scale.y;
     }
 
-    Vec2 newCenter = associated.box.Center();
-    Vec2 difference = oldCenter - newCenter;
-    associated.box += difference;
+    associated.box = associated.box.GetCentered(oldCenter);
 }
 
 Vec2 Sprite::GetScale() {

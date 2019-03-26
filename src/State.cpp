@@ -34,8 +34,7 @@ State::State() : quitRequested(false), started(false) {
     GameObject* alienGo = new GameObject();
     Alien* alien = new Alien(*alienGo, 4);
     alienGo->AddComponent(alien);
-    alienGo->box.x = 512 - alienGo->box.w / 2;
-    alienGo->box.y = 300 - alienGo->box.h / 2;
+    alienGo->box = alienGo->box.GetCentered({ 512, 300 });
     objects.emplace_back(alienGo);
 
     music.Open("assets/audio/stageState.ogg");

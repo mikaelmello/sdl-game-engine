@@ -27,8 +27,7 @@ void Minion::Update(float dt) {
     Vec2 movement = Vec2(MINION_DISTANCE, 0).GetRotated(arc);
     Vec2 newPos = alienCenterGo->box.Center() + movement;
 
-    associated.box.x = newPos.x - associated.box.w/2;
-    associated.box.y = newPos.y - associated.box.h/2;
+    associated.box = associated.box.GetCentered(newPos);
     associated.angleDeg = Helpers::rad_to_deg(arc);
 }
 
@@ -46,11 +45,9 @@ void Minion::Shoot(Vec2 target) {
     Vec2 direction = target - curPos;
 
     GameObject* go = new GameObject();
-
     Bullet* bullet = new Bullet(*go, direction.XAxisInclination(), 400, 30, 500, "assets/img/minionbullet1.png");
-    go->AddComponent(bullet);
-    go->box.x = curPos.x - go->box.w / 2;
-    go->box.y = curPos.y - go->box.h / 2;
 
+    go->box = go->box.GetCentered(curPos);
+    go->AddComponent(bullet);
     state.AddObject(go);
 }

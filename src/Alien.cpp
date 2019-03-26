@@ -69,8 +69,7 @@ void Alien::Update(float dt) {
             Vec2 movement = Vec2(distanceToMove, 0).GetRotated(direction.XAxisInclination());
 
             if (curPos.Distance(tarPos) < distanceToMove) {
-                associated.box.x = tarPos.x - associated.box.w / 2;
-                associated.box.y = tarPos.y - associated.box.h / 2;
+                associated.box = associated.box.GetCentered(tarPos);
                 taskQueue.pop();
             } else {
                 associated.box.x += movement.x;
