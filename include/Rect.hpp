@@ -15,6 +15,8 @@ class Rect {
         Rect(float x, float y, float w, float h);
 
         Vec2 Center() const;
+
+        Rect GetCentered(Vec2 pos) const;
         
         float Distance(const Rect& rect) const;
 
