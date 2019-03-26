@@ -36,7 +36,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y, clipRect.w * scale.x, clipRect.h * scale.y };
+    SDL_Rect temp_rect = { x, y, (int) (clipRect.w * scale.x), (int) (clipRect.h * scale.y) };
     int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
