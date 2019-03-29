@@ -13,9 +13,9 @@
 
 class Sprite : public Component {
     public:
-        Sprite(GameObject& associated);
+        Sprite(GameObject& associated, int frameCount = 1, float frameTime = 1);
 
-        Sprite(GameObject& associated, const std::string& file);
+        Sprite(GameObject& associated, const std::string& file, int frameCount = 1, float frameTime = 1);
 
         ~Sprite();
 
@@ -39,11 +39,21 @@ class Sprite : public Component {
 
         void SetScaleX(float scaleX, float scaleY);
 
+        void SetFrame(int frame);
+
+        void SetFrameCount(int frameCount);
+
+        void SetFrameTime(float frameTime);
+
         Vec2 GetScale();
     private:
         SDL_Texture* texture;
         int width;
         int height;
+        int frameCount;
+        int currentFrame;
+        float frameTime;
+        float timeElapsed;
         SDL_Rect clipRect;
         Vec2 scale;
 };
