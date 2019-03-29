@@ -36,7 +36,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y, (int) (clipRect.w * scale.x), (int) (clipRect.h * scale.y) };
+    SDL_Rect temp_rect = { x, y, GetWidth(), GetHeight() };
     int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
@@ -54,11 +54,11 @@ bool Sprite::Is(const std::string& type) const {
 }
 
 int Sprite::GetWidth() const {
-    return width;
+    return round(scale.x * width);
 }
 
 int Sprite::GetHeight() const {
-    return height;
+    return round(scale.y * height);
 }
 
 bool Sprite::IsOpen() const {
@@ -70,11 +70,11 @@ void Sprite::SetScaleX(float scaleX, float scaleY) {
 
     if (scaleX != 0) {
         scale.x = scaleX;
-        associated.box.w = width * scale.x;
+        associated.box.w = GetWidth();
     }
     if (scaleY != 0) {
         scale.y = scaleY;
-        associated.box.h = height * scale.y;
+        associated.box.h = GetHeight();
     }
 
     associated.box = associated.box.GetCentered(oldCenter);
