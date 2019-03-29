@@ -2,7 +2,7 @@
 
 Current repository link: https://github.com/mikaelmello/sdl-engine
 
-Game engined developed in C++ using the SDL library, as part of small projects from the Introduction to Game Development course, from University of Brasília.
+Game engine developed in C++ using the SDL library, as part of small projects of the Introduction to Game Development course, from University of Brasília.
 
 There are seven projects and each one will continue from the previous one, this repository will contain all code from the seven projects, each one in their respective branches, from `trabalho-1` to `trabalho-7`
 
