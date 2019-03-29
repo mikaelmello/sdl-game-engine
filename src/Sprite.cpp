@@ -27,9 +27,9 @@ void Sprite::Open(const std::string& file) {
         throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());
     }
 
-    associated.box.w = GetWidth();
-    associated.box.h = GetHeight();
-    SetClip(0, 0, GetWidth(), GetHeight());
+    associated.box.w = width;
+    associated.box.h = height;
+    SetClip(0, 0, width, height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -37,7 +37,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y, GetWidth(), GetHeight() };
+    SDL_Rect temp_rect = { x, y, clipRect.w, clipRect.h };
     int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
