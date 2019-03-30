@@ -14,7 +14,8 @@
 
 class Bullet : public Component {
     public:
-        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, const std::string& sprite);
+        Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, const std::string& sprite,
+            int frameCount, float frameTime);
 
         void Update(float dt) override;
 

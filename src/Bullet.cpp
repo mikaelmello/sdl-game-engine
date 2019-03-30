@@ -5,9 +5,10 @@
 #include "Vec2.hpp"
 #include <string>
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, const std::string& sprite)
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance,
+    const std::string& sprite, int frameCount, float frameTime)
     : Component(associated), distanceLeft(maxDistance), damage(damage) {
-    Sprite* image = new Sprite(associated, sprite);
+    Sprite* image = new Sprite(associated, sprite, frameCount, frameTime);
     associated.AddComponent(image);
     associated.angleDeg = Helpers::rad_to_deg(-angle);
     this->speed = Vec2(speed, 0).GetRotated(angle);

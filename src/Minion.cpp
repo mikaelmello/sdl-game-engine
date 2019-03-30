@@ -45,7 +45,7 @@ void Minion::Shoot(Vec2 target) {
     Vec2 direction = target - curPos;
 
     GameObject* go = new GameObject();
-    Bullet* bullet = new Bullet(*go, direction.XAxisInclination(), 400, 30, 500, "assets/img/minionbullet1.png");
+    Bullet* bullet = new Bullet(*go, direction.XAxisInclination(), 400, 30, 500, "assets/img/minionbullet2.png", 3, 0.1);
 
     go->box = go->box.GetCentered(curPos);
     go->AddComponent(bullet);

@@ -29,7 +29,7 @@ void Sprite::Open(const std::string& file) {
 
     associated.box.w = width;
     associated.box.h = height;
-    SetClip(0, 0, width, height);
+    SetClip(0, 0, width / frameCount, height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -37,7 +37,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 void Sprite::Render(int x, int y) {
-    SDL_Rect temp_rect = { x, y,  (int) round(scale.x * clipRect.w), (int) round(scale.y * clipRect.h) };
+    SDL_Rect temp_rect = { x, y, (int) round(scale.x * clipRect.w), (int) round(scale.y * clipRect.h) };
     int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
