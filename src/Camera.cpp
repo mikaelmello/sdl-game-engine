@@ -30,14 +30,6 @@ void Camera::Update(float dt) {
     bool left = im.IsKeyDown(LEFT_ARROW_KEY);
     bool up = im.IsKeyDown(UP_ARROW_KEY);
 
-    if (right && left) {
-        right = left = false;
-    }
-
-    if (up && down) {
-        up = down = false;
-    }
-
     Vec2 curSpeed = speed * dt;
 
     if (right) {
