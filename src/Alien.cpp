@@ -60,7 +60,7 @@ void Alien::Update(float dt) {
 
     if (!taskQueue.empty()) {
         Action act = taskQueue.front();
-        float distanceToMove = ALIEN_SPEED * 0.034;
+        float distanceToMove = ALIEN_SPEED * dt;
 
         if (act.type == Action::MOVE) {
             Vec2 curPos = associated.box.Center();
