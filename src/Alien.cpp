@@ -12,9 +12,7 @@
 #include <cmath>
 #include <queue>
 
-const Vec2 Alien::speed = {300, 0};
-
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions) {
+Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     associated.AddComponent(sprite);
 }
