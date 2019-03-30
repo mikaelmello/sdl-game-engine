@@ -10,8 +10,6 @@
 #include "GameObject.hpp"
 #include <string>
 
-#define BULLET_SPEED 200
-
 class Bullet : public Component {
     public:
         Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, const std::string& sprite);

@@ -9,6 +9,9 @@
 #include <string>
 #include <cmath>
 
+const float Minion::rotationSpeed = (M_PI / 2);
+const float Minion::distanceFromCenter = 150;
+
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg) {
     Sprite* sprite = new Sprite(associated, "assets/img/minion.png");
     associated.AddComponent(sprite);
@@ -22,9 +25,9 @@ void Minion::Update(float dt) {
         return;
     }
 
-    float distanceToMove = MINION_SPEED * dt;
+    float distanceToMove = rotationSpeed * dt;
     arc = fmod(arc + distanceToMove, M_PI * 2);
-    Vec2 movement = Vec2(MINION_DISTANCE, 0).GetRotated(arc);
+    Vec2 movement = Vec2(distanceFromCenter, 0).GetRotated(arc);
     Vec2 newPos = alienCenterGo->box.Center() + movement;
 
     associated.box = associated.box.GetCentered(newPos);

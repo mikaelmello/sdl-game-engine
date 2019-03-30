@@ -12,6 +12,8 @@
 #include <cmath>
 #include <queue>
 
+const Vec2 Alien::speed = {300, 0};
+
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     associated.AddComponent(sprite);
@@ -49,7 +51,7 @@ void Alien::Update(float dt) {
         im.GetMouseY() + Camera::pos.y,
     };
 
-    associated.angleDeg = fmod(associated.angleDeg + 10 * MINION_SPEED * dt, 360);
+    associated.angleDeg = fmod(associated.angleDeg + 10 * Minion::rotationSpeed * dt, 360);
 
     if (im.MousePress(LEFT_MOUSE_BUTTON)) {
         taskQueue.emplace(Action::SHOOT, mousePos.x, mousePos.y);
@@ -60,15 +62,14 @@ void Alien::Update(float dt) {
 
     if (!taskQueue.empty()) {
         Action act = taskQueue.front();
-        float distanceToMove = ALIEN_SPEED * dt;
 
         if (act.type == Action::MOVE) {
             Vec2 curPos = associated.box.Center();
             Vec2 tarPos = act.pos;
             Vec2 direction = tarPos - curPos;
-            Vec2 movement = Vec2(distanceToMove, 0).GetRotated(direction.XAxisInclination());
+            Vec2 movement = speed.GetRotated(direction.XAxisInclination()) * dt;
 
-            if (curPos.Distance(tarPos) < distanceToMove) {
+            if (curPos.Distance(tarPos) < movement.Magnitude()) {
                 associated.box = associated.box.GetCentered(tarPos);
                 taskQueue.pop();
             } else {
