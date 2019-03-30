@@ -33,8 +33,8 @@ bool Rect::Contains(const Vec2& point) const {
 }
 
 Rect& Rect::operator+=(const Vec2& rhs) {
-    w += rhs.x;
-    h += rhs.y;
+    x += rhs.x;
+    y += rhs.y;
     return *this;
 }
 
