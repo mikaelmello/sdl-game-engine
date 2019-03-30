@@ -13,8 +13,6 @@
 #include <queue>
 #include <memory>
 
-#define ALIEN_SPEED 200
-
 class Alien : public Component {
     public:
         Alien(GameObject& associated, int nMinions);
@@ -28,6 +26,8 @@ class Alien : public Component {
         bool Is(const std::string& type) const override;
 
         void Render() override;
+
+        const static Vec2 speed;
     private:
         class Action {
             public:
@@ -42,7 +42,6 @@ class Alien : public Component {
                 Vec2 pos;
         };
 
-        Vec2 speed;
         int hp;
         int nMinions;
 

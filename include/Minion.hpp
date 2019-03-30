@@ -12,9 +12,6 @@
 #include <memory>
 #include <cmath>
 
-#define MINION_SPEED (M_PI / 2)
-#define MINION_DISTANCE (150)
-
 class Minion : public Component {
     public:
         Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg = 0);
@@ -26,7 +23,10 @@ class Minion : public Component {
         void Render() override;
 
         void Shoot (Vec2 target);
+
+        const static float rotationSpeed;
     private:
+        const static float distanceFromCenter;
         std::weak_ptr<GameObject> alienCenter;
         float arc;
 };
