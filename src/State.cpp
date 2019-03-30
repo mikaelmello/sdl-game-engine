@@ -9,6 +9,7 @@
 #include "GameObject.hpp"
 #include "Component.hpp"
 #include "Alien.hpp"
+#include "PenguinBody.hpp"
 #include "Vec2.hpp"
 #include "Music.hpp"
 #include <string>
@@ -36,6 +37,14 @@ State::State() : quitRequested(false), started(false) {
     alienGo->AddComponent(alien);
     alienGo->box = alienGo->box.GetCentered(512, 300);
     objects.emplace_back(alienGo);
+
+    GameObject* penguinGo = new GameObject();
+    PenguinBody* pb = new PenguinBody(*penguinGo);
+    penguinGo->AddComponent(pb);
+    penguinGo->box = penguinGo->box.GetCentered(704, 640);
+    objects.emplace_back(penguinGo);
+    
+    Camera::Follow(penguinGo);
 
     music.Open("assets/audio/stageState.ogg");
 	music.Play();

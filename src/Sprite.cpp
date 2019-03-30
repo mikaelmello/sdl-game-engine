@@ -9,7 +9,6 @@
 #include "GameObject.hpp"
 #include <stdexcept>
 #include <string>
-#include <iostream>
 
 Sprite::Sprite(GameObject& associated, int frameCount, float frameTime)
     : Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount), frameTime(frameTime), currentFrame(0), timeElapsed(0) {}
@@ -27,7 +26,7 @@ void Sprite::Open(const std::string& file) {
         throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());
     }
 
-    associated.box.w = width;
+    associated.box.w = width / frameCount;
     associated.box.h = height;
     SetClip(0, 0, width / frameCount, height);
 }
