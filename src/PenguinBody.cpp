@@ -20,10 +20,10 @@ float PenguinBody::angleSpeed = M_PI * 2;
 PenguinBody* PenguinBody::player = nullptr;
 
 PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed(0, 0), linearSpeed(0), angle(0), hp(100) {
-    Sprite* sprite = new Sprite(associated, "assets/img/penguin.png");
     Collider* collider = new Collider(associated);
-    associated.AddComponent(sprite);
+    Sprite* sprite = new Sprite(associated, "assets/img/penguin.png");
     associated.AddComponent(collider);
+    associated.AddComponent(sprite);
     player = this;
 }
 

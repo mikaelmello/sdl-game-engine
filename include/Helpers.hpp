@@ -27,6 +27,8 @@ bool is_whitespace(const std::string& s);
 
 float rad_to_deg(float rad);
 
+float deg_to_rad(float deg);
+
 } // end namespace Helpers
 
 #endif

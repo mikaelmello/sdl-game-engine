@@ -12,6 +12,7 @@
 #include "PenguinBody.hpp"
 #include "Vec2.hpp"
 #include "Music.hpp"
+#include "Helpers.hpp"
 #include "Collision.hpp"
 #include "Collider.hpp"
 #include <string>
@@ -107,7 +108,9 @@ void State::Update(float dt) {
                 continue;
             }
 
-            bool collides = Collision::IsColliding(collider1->box, collider2->box, go1->angleDeg, go2->angleDeg);
+            float radDeg1 = Helpers::deg_to_rad(go1->angleDeg);
+            float radDeg2 = Helpers::deg_to_rad(go2->angleDeg);
+            bool collides = Collision::IsColliding(collider1->box, collider2->box, radDeg1, radDeg2);
             if (collides) {
                 go1->NotifyCollision(*go2);
                 go2->NotifyCollision(*go1);

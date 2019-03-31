@@ -46,3 +46,7 @@ bool Helpers::is_whitespace(const std::string& s) {
 float Helpers::rad_to_deg(float rad) {
     return rad * 180 / M_PI;
 }
+
+float Helpers::deg_to_rad(float deg) {
+    return deg * M_PI / 180;
+}

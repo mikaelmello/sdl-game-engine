@@ -14,7 +14,7 @@
 
 class Collider : public Component {
     public:
-        Collider(GameObject& associated, Vec2 scale = {1, 1}, Vec2 offset = {1, 1});
+        Collider(GameObject& associated, Vec2 scale = {1, 1}, Vec2 offset = {0, 0});
 
         void Update(float dt) override;
 

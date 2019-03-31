@@ -20,8 +20,8 @@ void GameObject::Start() {
 
 void GameObject::Update(float dt) {
     std::for_each(
-        components.begin(),
-        components.end(),
+        components.rbegin(),
+        components.rend(),
         [&](std::unique_ptr<Component>& cpt) { cpt->Update(dt); }
     );
 }
