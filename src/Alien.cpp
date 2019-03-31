@@ -3,6 +3,7 @@
 #include "GameObject.hpp"
 #include "InputManager.hpp"
 #include "Game.hpp"
+#include "Collider.hpp"
 #include "State.hpp"
 #include "Vec2.hpp"
 #include "Camera.hpp"
@@ -14,7 +15,9 @@
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
+    Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
+    associated.AddComponent(collider);
 }
 
 Alien::~Alien() {

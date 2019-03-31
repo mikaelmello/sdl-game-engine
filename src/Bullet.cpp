@@ -3,13 +3,16 @@
 #include "Helpers.hpp"
 #include "Sprite.hpp"
 #include "Vec2.hpp"
+#include "Collider.hpp"
 #include <string>
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance,
     const std::string& sprite, int frameCount, float frameTime)
     : Component(associated), distanceLeft(maxDistance), damage(damage) {
     Sprite* image = new Sprite(associated, sprite, frameCount, frameTime);
+    Collider* collider = new Collider(associated);
     associated.AddComponent(image);
+    associated.AddComponent(collider);
     associated.angleDeg = Helpers::rad_to_deg(-angle);
     this->speed = Vec2(speed, 0).GetRotated(angle);
 }

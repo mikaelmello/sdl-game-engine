@@ -3,6 +3,7 @@
 #include "GameObject.hpp"
 #include "Vec2.hpp"
 #include "Game.hpp"
+#include "Collider.hpp"
 #include "State.hpp"
 #include "Bullet.hpp"
 #include "Helpers.hpp"
@@ -14,7 +15,9 @@ const float Minion::distanceFromCenter = 150;
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) : Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg) {
     Sprite* sprite = new Sprite(associated, "assets/img/minion.png");
+    Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
+    associated.AddComponent(collider);
 }
 
 void Minion::Update(float dt) {

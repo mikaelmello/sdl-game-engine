@@ -3,6 +3,7 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 #include "Vec2.hpp"
+#include "Collider.hpp"
 #include "Game.hpp"
 #include "State.hpp"
 #include "InputManager.hpp"
@@ -14,7 +15,9 @@
 
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody) : Component(associated), penguinBody(penguinBody), angle(0) {
     Sprite* sprite = new Sprite(associated, "assets/img/cubngun.png");
+    Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
+    associated.AddComponent(collider);
 }
 
 void PenguinCannon::Update(float dt) {

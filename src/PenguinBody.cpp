@@ -3,6 +3,7 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 #include "Vec2.hpp"
+#include "Collider.hpp"
 #include "Game.hpp"
 #include "State.hpp"
 #include "InputManager.hpp"
@@ -18,7 +19,9 @@ PenguinBody* PenguinBody::player = nullptr;
 
 PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed(0, 0), linearSpeed(0), angle(0), hp(30) {
     Sprite* sprite = new Sprite(associated, "assets/img/penguin.png");
+    Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
+    associated.AddComponent(collider);
     player = this;
 }
 
