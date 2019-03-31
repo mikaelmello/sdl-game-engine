@@ -13,9 +13,6 @@
 Collider::Collider(GameObject& associated, Vec2 scale, Vec2 offset) : Component(associated), scale(scale), offset(offset) {
 }
 
-Collider::~Collider() {
-}
-
 void Collider::Update(float dt) {
     box = associated.box;
     box.w *= scale.x;
