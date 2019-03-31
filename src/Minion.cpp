@@ -25,6 +25,12 @@ void Minion::Update(float dt) {
 
     if (!alienCenterGo) {
         associated.RequestDelete();
+
+        GameObject* explosion = new GameObject();
+        Sprite* explosionSprite = new Sprite(*explosion, "assets/img/miniondeath.png", 4, 0.375, 1.5);
+        explosion->AddComponent(explosionSprite);
+        explosion->box = explosion->box.GetCentered(associated.box.Center());
+        Game::GetInstance().GetState().AddObject(explosion);
         return;
     }
 
