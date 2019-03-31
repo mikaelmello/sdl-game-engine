@@ -8,6 +8,7 @@
 #include "Vec2.hpp"
 #include "Camera.hpp"
 #include "Bullet.hpp"
+#include "Sound.hpp"
 #include "Minion.hpp"
 #include <string>
 #include <memory>
@@ -51,6 +52,16 @@ void Alien::Start() {
 void Alien::Update(float dt) {
     if (hp <= 0) {
         associated.RequestDelete();
+
+        GameObject* explosion = new GameObject();
+        Sprite* explosionSprite = new Sprite(*explosion, "assets/img/aliendeath.png", 4, 0.375, 1.5);
+        Sound* explosionSound = new Sound(*explosion, "assets/audio/boom.wav");
+
+        explosionSound->Play();
+        explosion->AddComponent(explosionSound);
+        explosion->AddComponent(explosionSprite);
+        explosion->box = explosion->box.GetCentered(associated.box.Center());
+        Game::GetInstance().GetState().AddObject(explosion);
         return;
     }
 
