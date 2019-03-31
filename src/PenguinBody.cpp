@@ -5,6 +5,7 @@
 #include "Vec2.hpp"
 #include "Bullet.hpp"
 #include "Collider.hpp"
+#include "Sound.hpp"
 #include "Game.hpp"
 #include "State.hpp"
 #include "InputManager.hpp"
@@ -75,6 +76,16 @@ void PenguinBody::Update(float dt) {
         associated.RequestDelete();
         pcGo->RequestDelete();
         Camera::Unfollow();
+
+        GameObject* explosion = new GameObject();
+        Sprite* explosionSprite = new Sprite(*explosion, "assets/img/penguindeath.png", 5, 0.3, 1.5);
+        Sound* explosionSound = new Sound(*explosion, "assets/audio/boom.wav");
+
+        explosionSound->Play();
+        explosion->AddComponent(explosionSound);
+        explosion->AddComponent(explosionSprite);
+        explosion->box = explosion->box.GetCentered(associated.box.Center());
+        Game::GetInstance().GetState().AddObject(explosion);
     }
 }
 

@@ -16,7 +16,7 @@ Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float se
       currentFrame(0), secondsToSelfDestruct(secondsToSelfDestruct) {}
 
 Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime,
-    float secondsToSelfDestruct) : Sprite(associated, frameCount, frameTime) {
+    float secondsToSelfDestruct) : Sprite(associated, frameCount, frameTime, secondsToSelfDestruct) {
     Open(file);
 }
 
