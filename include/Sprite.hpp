@@ -8,14 +8,15 @@
 #define INCLUDE_SDL
 #include "SDL_include.h"
 #include "Component.hpp"
+#include "Timer.hpp"
 #include "GameObject.hpp"
 #include <string>
 
 class Sprite : public Component {
     public:
-        Sprite(GameObject& associated, int frameCount = 1, float frameTime = 1);
+        Sprite(GameObject& associated, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
 
-        Sprite(GameObject& associated, const std::string& file, int frameCount = 1, float frameTime = 1);
+        Sprite(GameObject& associated, const std::string& file, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
 
         ~Sprite();
 
@@ -53,7 +54,9 @@ class Sprite : public Component {
         int frameCount;
         int currentFrame;
         float frameTime;
-        float timeElapsed;
+        float secondsToSelfDestruct;
+        Timer currentFrameCount;
+        Timer selfDestructCount;
         SDL_Rect clipRect;
         Vec2 scale;
 };

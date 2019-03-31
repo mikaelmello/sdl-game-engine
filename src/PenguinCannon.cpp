@@ -7,6 +7,7 @@
 #include "Game.hpp"
 #include "State.hpp"
 #include "InputManager.hpp"
+#include "Timer.hpp"
 #include "Camera.hpp"
 #include "Bullet.hpp"
 #include "Helpers.hpp"

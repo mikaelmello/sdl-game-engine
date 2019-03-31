@@ -6,14 +6,17 @@
 #include "Camera.hpp"
 #include "Resources.hpp"
 #include "Component.hpp"
+#include "Timer.hpp"
 #include "GameObject.hpp"
 #include <stdexcept>
 #include <string>
 
-Sprite::Sprite(GameObject& associated, int frameCount, float frameTime)
-    : Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount), frameTime(frameTime), currentFrame(0), timeElapsed(0) {}
+Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float secondsToSelfDestruct)
+    : Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount), frameTime(frameTime),
+      currentFrame(0), secondsToSelfDestruct(secondsToSelfDestruct) {}
 
-Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime) : Sprite(associated, frameCount, frameTime) {
+Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime,
+    float secondsToSelfDestruct) : Sprite(associated, frameCount, frameTime) {
     Open(file);
 }
 
@@ -48,12 +51,18 @@ void Sprite::Render() {
 }
 
 void Sprite::Update(float dt) {
-    timeElapsed += dt;
-    if (timeElapsed > frameTime) {
-        int framesElapsed = timeElapsed / frameTime;
+    currentFrameCount.Update(dt);
+    selfDestructCount.Update(dt);
+
+    if (secondsToSelfDestruct > 0 && selfDestructCount.Get() > secondsToSelfDestruct) {
+        associated.RequestDelete();
+    }
+
+    if (currentFrameCount.Get() > frameTime) {
+        int framesElapsed = currentFrameCount.Get() / frameTime;
         int nextFrame = (currentFrame + framesElapsed) % frameCount;
         SetFrame(nextFrame);
-        timeElapsed = 0;
+        currentFrameCount.Restart();
     }
 }
 
