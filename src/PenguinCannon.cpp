@@ -54,7 +54,7 @@ void PenguinCannon::Shoot() {
     State& state = game.GetState();
 
     GameObject* go = new GameObject();
-    Bullet* bullet = new Bullet(*go, angle, 400, 30, 500, "assets/img/penguinbullet.png", 4, 0.3);
+    Bullet* bullet = new Bullet(*go, angle, 400, 30, 500, "assets/img/penguinbullet.png", 4, 0.3, false);
 
     Vec2 curPos = associated.box.Center();
     Vec2 initialPos = curPos + Vec2(50, 0).GetRotated(angle);

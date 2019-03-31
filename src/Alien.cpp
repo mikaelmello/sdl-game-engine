@@ -7,13 +7,14 @@
 #include "State.hpp"
 #include "Vec2.hpp"
 #include "Camera.hpp"
+#include "Bullet.hpp"
 #include "Minion.hpp"
 #include <string>
 #include <memory>
 #include <cmath>
 #include <queue>
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0) {
+Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0), hp(200) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
@@ -22,6 +23,14 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMin
 
 Alien::~Alien() {
     minions.clear();
+}
+
+void Alien::NotifyCollision(GameObject& other) {
+    Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+
+    if (bullet != nullptr && !bullet->targetsPlayer) {
+        hp -= bullet->GetDamage();
+    }
 }
 
 void Alien::Start() {

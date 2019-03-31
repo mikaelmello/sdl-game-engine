@@ -13,7 +13,7 @@
 class Bullet : public Component {
     public:
         Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, const std::string& sprite,
-            int frameCount, float frameTime);
+            int frameCount, float frameTime, bool targetsPlayer);
 
         void Update(float dt) override;
 
@@ -22,6 +22,10 @@ class Bullet : public Component {
         void Render() override;
 
         int GetDamage() const;
+
+        void NotifyCollision(GameObject& other);
+
+        bool targetsPlayer;
     private:
         Vec2 speed;
         float distanceLeft;

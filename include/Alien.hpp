@@ -21,6 +21,8 @@ class Alien : public Component {
 
         void Start();
 
+        void NotifyCollision(GameObject& other) override;
+
         void Update(float dt) override;
 
         bool Is(const std::string& type) const override;

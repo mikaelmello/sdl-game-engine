@@ -3,10 +3,12 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 #include "Vec2.hpp"
+#include "Bullet.hpp"
 #include "Collider.hpp"
 #include "Game.hpp"
 #include "State.hpp"
 #include "InputManager.hpp"
+#include "Camera.hpp"
 #include "Helpers.hpp"
 #include <string>
 #include <cmath>
@@ -17,7 +19,7 @@ float PenguinBody::acceleration = 100;
 float PenguinBody::angleSpeed = M_PI * 2;
 PenguinBody* PenguinBody::player = nullptr;
 
-PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed(0, 0), linearSpeed(0), angle(0), hp(30) {
+PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed(0, 0), linearSpeed(0), angle(0), hp(100) {
     Sprite* sprite = new Sprite(associated, "assets/img/penguin.png");
     Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
@@ -27,6 +29,14 @@ PenguinBody::PenguinBody(GameObject& associated) : Component(associated), speed(
 
 PenguinBody::~PenguinBody() {
     player = nullptr;
+}
+
+void PenguinBody::NotifyCollision(GameObject& other) {
+    Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+
+    if (bullet != nullptr && bullet->targetsPlayer) {
+        hp -= bullet->GetDamage();
+    }
 }
 
 void PenguinBody::Start() {
@@ -64,6 +74,7 @@ void PenguinBody::Update(float dt) {
     if (hp <= 0) {
         associated.RequestDelete();
         pcGo->RequestDelete();
+        Camera::Unfollow();
     }
 }
 
