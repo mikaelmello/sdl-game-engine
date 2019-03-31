@@ -12,7 +12,7 @@ Vec2 Vec2::GetNormalized() const {
 
 Vec2 Vec2::GetRotated(const float& d) const {
     float xl = x * cos(d) - y * sin(d);
-    float yl = y * cos(d) - x * sin(d);
+    float yl = y * cos(d) + x * sin(d);
     return Vec2(xl, yl);
 }
 
@@ -26,8 +26,7 @@ float Vec2::Distance(const Vec2& v) const {
 }
 
 float Vec2::XAxisInclination() const {
-    // Return negative value because the Y axis is inverted
-    return -atan2(y, x);
+    return atan2(y, x);
 }
 
 Vec2& Vec2::operator+=(const Vec2& rhs) {
