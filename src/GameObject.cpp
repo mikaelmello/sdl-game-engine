@@ -26,6 +26,14 @@ void GameObject::Update(float dt) {
     );
 }
 
+void GameObject::NotifyCollision(GameObject& other) {
+    std::for_each(
+        components.begin(),
+        components.end(),
+        [&](std::unique_ptr<Component>& cpt) { cpt->NotifyCollision(other); }
+    );
+}
+
 void GameObject::Render() {
     std::for_each(
         components.begin(),

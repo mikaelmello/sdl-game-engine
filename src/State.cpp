@@ -12,6 +12,8 @@
 #include "PenguinBody.hpp"
 #include "Vec2.hpp"
 #include "Music.hpp"
+#include "Collision.hpp"
+#include "Collider.hpp"
 #include <string>
 #include <cmath>
 #include <algorithm>
@@ -92,6 +94,26 @@ void State::Update(float dt) {
         objects.end(),
         [&](std::shared_ptr<GameObject>& go) { go->Update(dt); }
     );
+
+    for (int i = 0; i < objects.size(); i++) {
+        for (int j = i+1; j < objects.size(); j++) {
+            std::shared_ptr<GameObject> go1 = objects[i];
+            std::shared_ptr<GameObject> go2 = objects[j];
+
+            Collider* collider1 = (Collider*)go1->GetComponent("Collider");
+            Collider* collider2 = (Collider*)go2->GetComponent("Collider");
+            
+            if (collider1 == nullptr || collider2 == nullptr) {
+                continue;
+            }
+
+            bool collides = Collision::IsColliding(collider1->box, collider2->box, go1->angleDeg, go2->angleDeg);
+            if (collides) {
+                go1->NotifyCollision(*go2);
+                go2->NotifyCollision(*go1);
+            }
+        }
+    }
 
     objects.erase(
         std::remove_if(

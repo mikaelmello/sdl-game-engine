@@ -13,7 +13,10 @@ class Component {
     public:
         Component(GameObject& associated);
 
+
         virtual ~Component();
+
+        virtual void NotifyCollision(GameObject& other);
 
         virtual void Start();
 
