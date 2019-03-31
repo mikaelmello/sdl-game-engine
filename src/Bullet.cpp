@@ -9,7 +9,7 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     : Component(associated), distanceLeft(maxDistance), damage(damage) {
     Sprite* image = new Sprite(associated, sprite);
     associated.AddComponent(image);
-    associated.angleDeg = Helpers::rad_to_deg(-angle);
+    associated.angleDeg = Helpers::rad_to_deg(angle);
     this->speed = Vec2(speed, 0).GetRotated(angle);
 }
 
