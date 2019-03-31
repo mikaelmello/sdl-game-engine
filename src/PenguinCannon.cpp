@@ -36,7 +36,7 @@ void PenguinCannon::Update(float dt) {
     };
 
     angle = (mousePos - bodyCenter).XAxisInclination();
-    associated.angleDeg = Helpers::rad_to_deg(-angle);
+    associated.angleDeg = Helpers::rad_to_deg(angle);
 
     if (im.MousePress(LEFT_MOUSE_BUTTON)) {
         Shoot();

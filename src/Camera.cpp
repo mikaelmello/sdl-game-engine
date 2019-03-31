@@ -33,15 +33,15 @@ void Camera::Update(float dt) {
     Vec2 curSpeed = speed * dt;
 
     if (right) {
-        pos += curSpeed;
+        pos.x += curSpeed.x;
     }
     if (left) {
-        pos += curSpeed.GetRotated((float) M_PI);
+        pos.x -= curSpeed.x;
     }
     if (up) {
-        pos += curSpeed.GetRotated((float) M_PI * 0.5);
+        pos.y -= curSpeed.x;
     }
     if (down) {
-        pos += curSpeed.GetRotated((float) M_PI * 1.5);
+        pos.y += curSpeed.x;
     }
 }

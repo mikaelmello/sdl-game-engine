@@ -15,7 +15,7 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
     Collider* collider = new Collider(associated);
     associated.AddComponent(image);
     associated.AddComponent(collider);
-    associated.angleDeg = Helpers::rad_to_deg(-angle);
+    associated.angleDeg = Helpers::rad_to_deg(angle);
     this->speed = Vec2(speed, 0).GetRotated(angle);
 }
 

@@ -59,17 +59,17 @@ void PenguinBody::Update(float dt) {
     if (im.IsKeyDown(S_KEY)) {
         linearSpeed = std::max(linearSpeed - acceleration * dt, -maxReverseSpeed);
     }
-    if (im.IsKeyDown(D_KEY)) {
+    if (im.IsKeyDown(A_KEY)) {
         angle -= angleSpeed * (1 - (abs(linearSpeed) / (2 * maxSpeed))) * dt;
     }
-    if (im.IsKeyDown(A_KEY)) {
+    if (im.IsKeyDown(D_KEY)) {
         angle += angleSpeed * (1 - (abs(linearSpeed) / (2 * maxSpeed))) * dt;
     }
 
     speed = { linearSpeed, 0 };
     Vec2 movement = speed.GetRotated(angle) * dt;
     associated.box += movement;
-    associated.angleDeg = Helpers::rad_to_deg(-angle);
+    associated.angleDeg = Helpers::rad_to_deg(angle);
 
     if (hp <= 0) {
         associated.RequestDelete();
