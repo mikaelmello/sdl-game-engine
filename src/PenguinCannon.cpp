@@ -13,6 +13,8 @@
 #include <string>
 #include <cmath>
 
+const float PenguinCannon::shootCooldown = 0.5;
+
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody) : Component(associated), penguinBody(penguinBody), angle(0) {
     Sprite* sprite = new Sprite(associated, "assets/img/cubngun.png");
     Collider* collider = new Collider(associated);
@@ -21,6 +23,7 @@ PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> p
 }
 
 void PenguinCannon::Update(float dt) {
+    timer.Update(dt);
     InputManager& im = InputManager::GetInstance();
     std::shared_ptr<GameObject> body = penguinBody.lock();
     if (body->IsDead()) {
@@ -50,6 +53,12 @@ bool PenguinCannon::Is(const std::string& type) const {
 }
 
 void PenguinCannon::Shoot() {
+    if (timer.Get() < shootCooldown) {
+        return;
+    }
+
+    timer.Restart();
+
     Game& game = Game::GetInstance();
     State& state = game.GetState();
 

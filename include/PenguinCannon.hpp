@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include "Timer.hpp"
 #include <string>
 #include <memory>
 
@@ -22,7 +23,9 @@ class PenguinCannon : public Component {
 
         void Shoot();
     private:
+        const static float shootCooldown;
         std::weak_ptr<GameObject> penguinBody;
+        Timer timer;
         float angle;
 };
 
