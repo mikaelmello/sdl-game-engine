@@ -27,6 +27,8 @@ class PenguinBody : public Component {
 
         void Render() override;
 
+        Vec2 GetPosition();
+
         static PenguinBody* player;
     private:
         static float maxSpeed;

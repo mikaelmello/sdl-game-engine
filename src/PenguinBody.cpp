@@ -94,3 +94,7 @@ void PenguinBody::Render() {}
 bool PenguinBody::Is(const std::string& type) const {
     return type == std::string("PenguinBody");
 }
+
+Vec2 PenguinBody::GetPosition() {
+    return associated.box.Center();
+}

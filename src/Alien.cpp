@@ -10,19 +10,26 @@
 #include "Bullet.hpp"
 #include "Sound.hpp"
 #include "Minion.hpp"
+#include "PenguinBody.hpp"
 #include <string>
 #include <memory>
+#include <iostream>
 #include <cmath>
 #include <queue>
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0), hp(200) {
+const float Alien::restingCooldown = 1;
+int Alien::alienCount = 0;
+
+Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0), hp(200), state(AlienState::RESTING) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
     associated.AddComponent(collider);
+    alienCount++;
 }
 
 Alien::~Alien() {
+    alienCount--;
     minions.clear();
 }
 
@@ -65,55 +72,49 @@ void Alien::Update(float dt) {
         return;
     }
 
-    InputManager& im = InputManager::GetInstance();
-
-    Vec2 mousePos = {
-        im.GetMouseX() + Camera::pos.x,
-        im.GetMouseY() + Camera::pos.y,
-    };
-
+    restTimer.Update(dt);
     associated.angleDeg = fmod(associated.angleDeg + 10 * Minion::rotationSpeed * dt, 360);
+    PenguinBody* player = PenguinBody::player;
 
-    if (im.MousePress(LEFT_MOUSE_BUTTON)) {
-        taskQueue.emplace(Action::SHOOT, mousePos.x, mousePos.y);
+    Vec2 curPos = associated.box.Center();
+    if (state == AlienState::MOVING) {
+        if (curPos.Distance(destination) < speed.Magnitude() * dt) {
+            associated.box = associated.box.GetCentered(destination);
+            state = AlienState::RESTING;
+            restTimer.Restart();
+            Shoot();
+        } else {
+            associated.box += speed * dt;
+        }
+    } else if (state == AlienState::RESTING && player && restTimer.Get() >= restingCooldown) {
+        destination = player->GetPosition();
+        float direction = (destination - curPos).XAxisInclination();
+        speed = Vec2(speed.Magnitude(), 0).GetRotated(direction);
+        state = AlienState::MOVING;
     }
-    if (im.MousePress(RIGHT_MOUSE_BUTTON)) {
-        taskQueue.emplace(Action::MOVE, mousePos.x, mousePos.y);
+}
+
+void Alien::Shoot() {
+    float minDistance = 1e15; // arbitrarily large number
+    int minionIndex = -1;
+
+    PenguinBody* player = PenguinBody::player;
+    if (player == nullptr) {
+        return;
     }
 
-    if (!taskQueue.empty()) {
-        Action act = taskQueue.front();
+    Vec2 target = player->GetPosition();
 
-        if (act.type == Action::MOVE) {
-            Vec2 curPos = associated.box.Center();
-            Vec2 tarPos = act.pos;
-            Vec2 direction = tarPos - curPos;
-            Vec2 movement = speed.GetRotated(direction.XAxisInclination()) * dt;
-
-            if (curPos.Distance(tarPos) < movement.Magnitude()) {
-                associated.box = associated.box.GetCentered(tarPos);
-                taskQueue.pop();
-            } else {
-                associated.box.x += movement.x;
-                associated.box.y += movement.y;
-            }
-        } else if (act.type == Action::SHOOT) {
-            float minDistance = 1e15; // arbitrarily large number
-            int minionIndex = -1;
-
-            for (int i = 0; i < nMinions; i++) {
-                std::shared_ptr<GameObject> minion = minions[i].lock();
-                float distance = act.pos.Distance(minion->box.Center());
-                if (distance <= minDistance) {
-                    minDistance = distance;
-                    minionIndex = i;
-                }
-            }
-            Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
-            minion->Shoot(act.pos);
-            taskQueue.pop();
+    for (int i = 0; i < nMinions; i++) {
+        std::shared_ptr<GameObject> minion = minions[i].lock();
+        float distance = target.Distance(minion->box.Center());
+        if (distance <= minDistance) {
+            minDistance = distance;
+            minionIndex = i;
         }
     }
+    Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
+    minion->Shoot(target);
 }
 
 void Alien::Render() {}
@@ -121,5 +122,3 @@ void Alien::Render() {}
 bool Alien::Is(const std::string& type) const {
     return type == std::string("Alien");
 }
-
-Alien::Action::Action(Alien::Action::ActionType type, float x, float y) : type(type), pos(x, y) {}

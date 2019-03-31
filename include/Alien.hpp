@@ -7,6 +7,7 @@
 
 #include "Vec2.hpp"
 #include "Component.hpp"
+#include "Timer.hpp"
 #include "GameObject.hpp"
 #include <string>
 #include <vector>
@@ -29,25 +30,19 @@ class Alien : public Component {
 
         void Render() override;
 
+        static int alienCount;
     private:
-        class Action {
-            public:
-                enum ActionType {
-                    MOVE,
-                    SHOOT,
-                };
+        void Shoot();
 
-                Action(ActionType type, float x, float y);
-
-                ActionType type;
-                Vec2 pos;
-        };
-
+        static const float restingCooldown;
+        enum AlienState { MOVING, RESTING };
+        AlienState state;
+        Timer restTimer;
+        Vec2 destination;
         Vec2 speed;
         int hp;
         int nMinions;
 
-        std::queue<Action> taskQueue;
         std::vector<std::weak_ptr<GameObject>> minions;
 };
 
