@@ -36,6 +36,7 @@ State::State() : quitRequested(false) {
 }
 
 State::~State() {
+	delete tileSet;
     objects.clear();
 }
 
