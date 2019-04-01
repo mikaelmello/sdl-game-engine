@@ -54,6 +54,7 @@ void State::Start() {
 }
 
 State::~State() {
+	delete tileSet;
     objects.clear();
     newObjects.clear();
 }
