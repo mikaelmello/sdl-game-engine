@@ -5,7 +5,7 @@
 
 int main (int argc, char** argv) {
     try {
-        Game game = Game::GetInstance();
+        Game& game = Game::GetInstance();
         game.Run();
     } catch (const std::exception& ex) {
         std::cout << "Game crashed\n\n" << std::endl;
