@@ -30,7 +30,7 @@ void Music::Play(int times) {
 
 void Music::Stop(int msTostop) {
     int return_code = Mix_FadeOutMusic(msTostop);
-    if (return_code != 0) {
+    if (return_code != 1) {
         throw std::runtime_error("Could not stop music: " + std::string(Mix_GetError()));
     }
 }
