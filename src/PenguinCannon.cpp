@@ -61,7 +61,7 @@ void PenguinCannon::Shoot() {
     timer.Restart();
 
     Game& game = Game::GetInstance();
-    State& state = game.GetState();
+    State& state = game.GetCurrentState();
 
     GameObject* go = new GameObject();
     Bullet* bullet = new Bullet(*go, angle, 400, 30, 500, "assets/img/penguinbullet.png", 4, 0.3, false);

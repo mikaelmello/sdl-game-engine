@@ -50,11 +50,21 @@ Game::Game(const std::string& title, int width, int height) : frameStart(0), dt(
         throw std::runtime_error("Failed to create a 2D rendering context for the window");
     }
 
-    state = new State();
+    storedState = nullptr;
 }
 
 Game::~Game() {
-    delete state;
+    if (storedState != nullptr) {
+        delete storedState;
+    }
+
+    while (!stateStack.empty()) {
+        stateStack.pop();
+    }
+
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -71,18 +81,57 @@ Game& Game::GetInstance() {
     return *instance;
 }
 
-State& Game::GetState() {
-    return *state;
+State& Game::GetCurrentState() {
+    if (stateStack.empty()) {
+        throw std::runtime_error("State stack is empty, can't get current state");
+    }
+
+    return *(stateStack.top().get());
 }
 
 SDL_Renderer* Game::GetRenderer() {
     return renderer;
 }
 
-void Game::Run() {
-    state->Start();
+void Game::Push(State* state) {
+    storedState = state;
+}
 
-    while (!state->QuitRequested()) {
+void Game::Run() {
+    if (storedState == nullptr) {
+        throw std::runtime_error("Can not start Game without an initial state");
+    }
+
+    stateStack.emplace(storedState);
+    storedState = nullptr;
+
+    GetCurrentState().Start();
+
+    while (!(stateStack.empty() || GetCurrentState().QuitRequested())) {
+        auto& topState = stateStack.top();
+        if (topState->PopRequested()) {
+            stateStack.pop();
+            if (!stateStack.empty()) {
+                auto& resumeState = stateStack.top();
+                resumeState->Resume();
+            }
+        }
+
+        if (storedState != nullptr) {
+            if (!stateStack.empty()) {
+                auto& pauseState = stateStack.top();
+                pauseState->Pause();
+            }
+            stateStack.emplace(storedState);
+            storedState = nullptr;
+        }        
+
+        if (stateStack.empty()) {
+            break;
+        }
+
+        auto& state = stateStack.top();
+
         InputManager::GetInstance().Update();
         CalculateDeltaTime();
         state->Update(GetDeltaTime());

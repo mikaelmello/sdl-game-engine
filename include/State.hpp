@@ -17,28 +17,39 @@ class State {
     public:
         State();
 
-        ~State();
+        virtual ~State();
 
-        void Start();
+        virtual void LoadAssets() = 0;
 
-        std::weak_ptr<GameObject> AddObject(GameObject* go);
+        virtual void Update(float dt) = 0;
 
-        std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+        virtual void Render() = 0;
+
+        virtual void Start() = 0;
+        
+        virtual void Pause() = 0;
+
+        virtual void Resume() = 0;
+
+        virtual std::weak_ptr<GameObject> AddObject(GameObject* go);
+
+        virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
 
         bool QuitRequested() const;
 
-        void LoadAssets();
+        bool PopRequested() const;
+    protected:
+        void StartArray();
 
-        void Update(float dt);
+        virtual void UpdateArray(float dt);
 
-        void Render();
-    private:
+        virtual void RenderArray();
+
+        bool popRequested;
+        bool quitRequested;
+        bool started;
         std::vector<std::shared_ptr<GameObject>> objects;
         std::vector<std::shared_ptr<GameObject>> newObjects;
-        bool started;
-        Music music;
-        TileSet* tileSet;
-        bool quitRequested;
 };
 
 #endif

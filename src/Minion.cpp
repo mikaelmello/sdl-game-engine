@@ -30,7 +30,7 @@ void Minion::Update(float dt) {
         Sprite* explosionSprite = new Sprite(*explosion, "assets/img/miniondeath.png", 4, 0.375, 1.5);
         explosion->AddComponent(explosionSprite);
         explosion->box = explosion->box.GetCentered(associated.box.Center());
-        Game::GetInstance().GetState().AddObject(explosion);
+        Game::GetInstance().GetCurrentState().AddObject(explosion);
         return;
     }
 
@@ -51,7 +51,7 @@ bool Minion::Is(const std::string& type) const {
 
 void Minion::Shoot(Vec2 target) {
     Game& game = Game::GetInstance();
-    State& state = game.GetState();
+    State& state = game.GetCurrentState();
 
     Vec2 curPos = associated.box.Center();
     Vec2 direction = target - curPos;

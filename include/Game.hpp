@@ -10,6 +10,8 @@
 #include "Vec2.hpp"
 #include "State.hpp"
 #include <string>
+#include <stack>
+#include <memory>
 
 class Game {
     public:
@@ -19,7 +21,9 @@ class Game {
 
         SDL_Renderer* GetRenderer();
 
-        State& GetState();
+        State& GetCurrentState();
+
+        void Push(State* state);
 
         static Game& GetInstance();        
 
@@ -39,7 +43,9 @@ class Game {
 
         SDL_Renderer* renderer;
 
-        State* state;
+        std::stack<std::unique_ptr<State>> stateStack;
+
+        State* storedState;
 
         int frameStart;
 

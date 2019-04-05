@@ -43,7 +43,7 @@ void Alien::NotifyCollision(GameObject& other) {
 
 void Alien::Start() {
     Game& game = Game::GetInstance();
-    State& state = game.GetState();
+    State& state = game.GetCurrentState();
 
     for (int i = 0; i < nMinions; i++) {
         GameObject* minionGo = new GameObject();
@@ -68,7 +68,7 @@ void Alien::Update(float dt) {
         explosion->AddComponent(explosionSound);
         explosion->AddComponent(explosionSprite);
         explosion->box = explosion->box.GetCentered(associated.box.Center());
-        Game::GetInstance().GetState().AddObject(explosion);
+        Game::GetInstance().GetCurrentState().AddObject(explosion);
         return;
     }
 

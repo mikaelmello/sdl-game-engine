@@ -20,125 +20,11 @@
 #include <algorithm>
 #include <memory>
 
-State::State() : quitRequested(false), started(false) {
-    GameObject* go = new GameObject();
-    CameraFollower* backgroundFixer = new CameraFollower(*go);
-    Sprite* background = new Sprite(*go, "assets/img/ocean.jpg");
-    go->AddComponent(backgroundFixer);
-    go->AddComponent(background);
-    objects.emplace_back(go);
-
-    GameObject* mapGo = new GameObject();
-    tileSet = new TileSet(64, 64, "assets/img/tileset.png");
-    TileMap* map = new TileMap(*mapGo, "assets/map/tileMap.txt", tileSet);
-    map->SetParallax(1, 0.5, 0.5);
-    mapGo->AddComponent(map);
-    objects.emplace_back(mapGo);
-
-    GameObject* alienGo = new GameObject();
-    Alien* alien = new Alien(*alienGo, 4);
-    alienGo->AddComponent(alien);
-    alienGo->box = alienGo->box.GetCentered(512, 300);
-    objects.emplace_back(alienGo);
-
-    GameObject* penguinGo = new GameObject();
-    PenguinBody* pb = new PenguinBody(*penguinGo);
-    penguinGo->AddComponent(pb);
-    penguinGo->box = penguinGo->box.GetCentered(704, 640);
-    objects.emplace_back(penguinGo);
-    
-    Camera::Follow(penguinGo);
-
-    music.Open("assets/audio/stageState.ogg");
-	music.Play();
-}
-
-void State::Start() {
-    LoadAssets();
-
-    std::for_each(
-        objects.begin(),
-        objects.end(),
-        [&](std::shared_ptr<GameObject>& go) { go->Start(); }
-    );
-
-    started = true;
-}
+State::State() : quitRequested(false), started(false), popRequested(false) {}
 
 State::~State() {
-	delete tileSet;
     objects.clear();
     newObjects.clear();
-}
-
-void State::LoadAssets() {
-}
-
-void State::Update(float dt) {
-    InputManager& im = InputManager::GetInstance();
-    quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
-
-    Camera::Update(dt);
-
-    // Since we are using iterators everywhere to iterate through the
-    // vectors, we can't add objects in State::AddObject directly into
-    // 'objects'. State::AddObject is called from inside a Update function
-    // thus adding a new GameObject while we are iterating through the array,
-    // potentially invalidating the iterators and causing a segmentation fault.
-    //
-    // We add a temporary vector to store new objects and copy then before
-    // starting a new set of iterations
-    objects.insert(objects.end(), newObjects.begin(), newObjects.end());
-    newObjects.clear();
-
-    std::for_each(
-        objects.begin(),
-        objects.end(),
-        [&](std::shared_ptr<GameObject>& go) { go->Update(dt); }
-    );
-
-    for (int i = 0; i < objects.size(); i++) {
-        for (int j = i+1; j < objects.size(); j++) {
-            std::shared_ptr<GameObject> go1 = objects[i];
-            std::shared_ptr<GameObject> go2 = objects[j];
-
-            Collider* collider1 = (Collider*)go1->GetComponent("Collider");
-            Collider* collider2 = (Collider*)go2->GetComponent("Collider");
-            
-            if (collider1 == nullptr || collider2 == nullptr) {
-                continue;
-            }
-
-            float radDeg1 = Helpers::deg_to_rad(go1->angleDeg);
-            float radDeg2 = Helpers::deg_to_rad(go2->angleDeg);
-            bool collides = Collision::IsColliding(collider1->box, collider2->box, radDeg1, radDeg2);
-            if (collides) {
-                go1->NotifyCollision(*go2);
-                go2->NotifyCollision(*go1);
-            }
-        }
-    }
-
-    objects.erase(
-        std::remove_if(
-            objects.begin(),
-            objects.end(),
-            [](std::shared_ptr<GameObject>& go) { return go->IsDead(); }
-        ),
-        objects.end()
-    );
-}
-
-void State::Render() {
-    std::for_each(
-        objects.begin(),
-        objects.end(),
-        [&](std::shared_ptr<GameObject>& go) { go->Render(); }
-    );
-}
-
-bool State::QuitRequested() const {
-    return quitRequested;
 }
 
 std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
@@ -161,4 +47,47 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
     }
 
     return std::weak_ptr<GameObject>(*it);
+}
+
+bool State::QuitRequested() const {
+    return quitRequested;
+}
+
+bool State::PopRequested() const {
+    return popRequested;
+}
+
+void State::StartArray() {
+    std::for_each(
+        objects.begin(),
+        objects.end(),
+        [&](std::shared_ptr<GameObject>& go) { go->Start(); }
+    );
+}
+
+void State::UpdateArray(float dt) {
+    // Since we are using iterators everywhere to iterate through the
+    // vectors, we can't add objects in StageState::AddObject directly into
+    // 'objects'. StageState::AddObject is called from inside a Update function
+    // thus adding a new GameObject while we are iterating through the array,
+    // potentially invalidating the iterators and causing a segmentation fault.
+    //
+    // We add a temporary vector to store new objects and copy then before
+    // starting a new set of iterations
+    objects.insert(objects.end(), newObjects.begin(), newObjects.end());
+    newObjects.clear();
+
+    std::for_each(
+        objects.begin(),
+        objects.end(),
+        [&](std::shared_ptr<GameObject>& go) { go->Update(dt); }
+    );
+}
+
+void State::RenderArray() {
+    std::for_each(
+        objects.begin(),
+        objects.end(),
+        [&](std::shared_ptr<GameObject>& go) { go->Render(); }
+    );
 }

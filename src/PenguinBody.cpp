@@ -42,7 +42,7 @@ void PenguinBody::NotifyCollision(GameObject& other) {
 
 void PenguinBody::Start() {
     Game& game = Game::GetInstance();
-    State& state = game.GetState();
+    State& state = game.GetCurrentState();
     GameObject* go = new GameObject();
     PenguinCannon* pc = new PenguinCannon(*go, state.GetObjectPtr(&associated));
     go->AddComponent(pc);
@@ -85,7 +85,7 @@ void PenguinBody::Update(float dt) {
         explosion->AddComponent(explosionSound);
         explosion->AddComponent(explosionSprite);
         explosion->box = explosion->box.GetCentered(associated.box.Center());
-        Game::GetInstance().GetState().AddObject(explosion);
+        Game::GetInstance().GetCurrentState().AddObject(explosion);
     }
 }
 
