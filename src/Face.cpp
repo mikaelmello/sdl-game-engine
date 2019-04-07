@@ -12,9 +12,9 @@ void Face::Damage(int damage) {
     hitpoints -= damage;
     if (hitpoints <= 0) {
         associated.RequestDelete();
-        auto component = associated.GetComponent("Sound");
-        if (auto componentSp = component.lock()) {
-            auto sound = std::dynamic_pointer_cast<Sound>(componentSp);
+        auto soundComponent = associated.GetComponent("Sound").lock();
+        if (soundComponent) {
+            auto sound = std::dynamic_pointer_cast<Sound>(soundComponent);
             sound->Play();
         }
     }
