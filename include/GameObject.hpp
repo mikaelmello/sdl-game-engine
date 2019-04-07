@@ -29,11 +29,11 @@ class GameObject {
 
         void RemoveComponent(Component* cpt);
 
-        Component* GetComponent(const std::string& type);
+        std::weak_ptr<Component> GetComponent(const std::string& type);
 
         Rect box;
     private:
-        std::vector<std::unique_ptr<Component>> components;
+        std::vector<std::shared_ptr<Component>> components;
         bool isDead;
 
 };
