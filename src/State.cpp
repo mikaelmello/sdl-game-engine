@@ -57,14 +57,14 @@ void State::Update(float dt) {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](std::unique_ptr<GameObject>& go) { go->Update(dt); }
+        [&](std::shared_ptr<GameObject>& go) { go->Update(dt); }
     );
 
     objects.erase(
         std::remove_if(
             objects.begin(),
             objects.end(),
-            [](std::unique_ptr<GameObject>& go) { return go->IsDead(); }
+            [](std::shared_ptr<GameObject>& go) { return go->IsDead(); }
         ),
         objects.end()
     );
@@ -74,7 +74,7 @@ void State::Render() {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](std::unique_ptr<GameObject>& go) { go->Render(); }
+        [](std::shared_ptr<GameObject>& go) { go->Render(); }
     );
 }
 
