@@ -47,14 +47,15 @@ void State::Input() {
 				// Obtem o ponteiro e casta pra Face.
 				GameObject* go = (GameObject*) objects[i].get();
 				// Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
-				// O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
+				// O propósito do shared_ptr é manter apenas uma cópia daquele ponteiro,
 				// ao usar get(), violamos esse princípio e estamos menos seguros.
 				// Esse código, assim como a classe Face, é provisório. Futuramente, para
 				// chamar funções de GameObjects, use objects[i]->função() direto.
 
 				if (go->box.Contains({(float)mouseX, (float)mouseY}) ) {
-					Face* face = (Face*) go->GetComponent("Face");
-					if (face != nullptr) {
+					auto component = go->GetComponent("Face");
+					if (auto componentSp = component.lock()) {
+						auto face = std::dynamic_pointer_cast<Face>(componentSp);
 						// Aplica dano
 						face->Damage(std::rand() % 10 + 10);
 						// Sai do loop (só queremos acertar um)
@@ -86,14 +87,14 @@ void State::Update(float dt) {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](std::unique_ptr<GameObject>& go) { go->Update(dt); }
+        [&](std::shared_ptr<GameObject>& go) { go->Update(dt); }
     );
 
     objects.erase(
         std::remove_if(
             objects.begin(),
             objects.end(),
-            [](std::unique_ptr<GameObject>& go) { return go->IsDead(); }
+            [](std::shared_ptr<GameObject>& go) { return go->IsDead(); }
         ),
         objects.end()
     );
@@ -103,7 +104,7 @@ void State::Render() {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](std::unique_ptr<GameObject>& go) { go->Render(); }
+        [](std::shared_ptr<GameObject>& go) { go->Render(); }
     );
 }
 

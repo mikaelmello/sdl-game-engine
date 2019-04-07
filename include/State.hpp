@@ -30,7 +30,7 @@ class State {
 
         void AddObject(int mouseX, int mouseY);
 
-        std::vector<std::unique_ptr<GameObject>> objects;
+        std::vector<std::shared_ptr<GameObject>> objects;
         Music music;
         bool quitRequested;
 };
