@@ -52,7 +52,7 @@ std::weak_ptr<Component> GameObject::GetComponent(const std::string& type) {
         [&](std::shared_ptr<Component>& cpt2){ return cpt2->Is(type); });
 
     if (it == components.end()) {
-        return std::weak_ptr<Component>();;
+        return std::weak_ptr<Component>();
     }
 
     return std::weak_ptr<Component>(*it);
