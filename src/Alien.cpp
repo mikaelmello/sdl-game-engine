@@ -78,7 +78,7 @@ void Alien::Update(float dt) {
             float minDistance = 1e15; // arbitrarily large number
             int minionIndex = -1;
 
-            for (int i = 0; i < nMinions; i++) {
+            for (int i = 0; i < minions.size(); i++) {
                 std::shared_ptr<GameObject> minion = minions[i].lock();
                 float distance = act.pos.Distance(minion->box.Center());
                 if (distance <= minDistance) {
@@ -86,8 +86,14 @@ void Alien::Update(float dt) {
                     minionIndex = i;
                 }
             }
-            Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
-            minion->Shoot(act.pos);
+
+            if (minionIndex != -1) {
+                auto component = minions[minionIndex].lock()->GetComponent("Minion");
+                if (auto componentSp = component.lock()) {
+                    auto minion = std::dynamic_pointer_cast<Minion>(componentSp);
+                    minion->Shoot(act.pos);
+                }
+            }
             taskQueue.pop();
         }
     }

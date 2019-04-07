@@ -14,7 +14,7 @@ void GameObject::Start() {
     std::for_each(
         components.begin(),
         components.end(),
-        [&](std::unique_ptr<Component>& cpt) { cpt->Start(); }
+        [](std::shared_ptr<Component>& cpt) { cpt->Start(); }
     );
 }
 
@@ -22,7 +22,7 @@ void GameObject::Update(float dt) {
     std::for_each(
         components.begin(),
         components.end(),
-        [&](std::unique_ptr<Component>& cpt) { cpt->Update(dt); }
+        [&](std::shared_ptr<Component>& cpt) { cpt->Update(dt); }
     );
 }
 
@@ -30,7 +30,7 @@ void GameObject::Render() {
     std::for_each(
         components.begin(),
         components.end(),
-        [&](std::unique_ptr<Component>& cpt) { cpt->Render(); }
+        [](std::shared_ptr<Component>& cpt) { cpt->Render(); }
     );
 }
 
@@ -48,20 +48,20 @@ void GameObject::AddComponent(Component* cpt) {
 
 void GameObject::RemoveComponent(Component* cpt) {
     auto it = std::find_if(components.begin(), components.end(),
-        [&](std::unique_ptr<Component>& cpt2){ return cpt2.get() == cpt; });
+        [&](std::shared_ptr<Component>& cpt2){ return cpt2.get() == cpt; });
 
     if (it != components.end()) {
         components.erase(it);
     }
 }
 
-Component* GameObject::GetComponent(const std::string& type) {
+std::weak_ptr<Component> GameObject::GetComponent(const std::string& type) {
     auto it = std::find_if(components.begin(), components.end(),
-        [&](std::unique_ptr<Component>& cpt2){ return cpt2->Is(type); });
+        [&](std::shared_ptr<Component>& cpt2){ return cpt2->Is(type); });
 
     if (it == components.end()) {
-        return nullptr;
+        return std::weak_ptr<Component>();
     }
 
-    return (*it).get();
+    return std::weak_ptr<Component>(*it);
 }
