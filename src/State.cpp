@@ -63,9 +63,9 @@ void State::Input() {
 				// chamar funções de GameObjects, use objects[i]->função() direto.
 
 				if (go->box.Contains({(float)mouseX, (float)mouseY}) ) {
-					auto component = go->GetComponent("Face");
-					if (auto componentSp = component.lock()) {
-						auto face = std::dynamic_pointer_cast<Face>(componentSp);
+					auto faceComponent = go->GetComponent("Face").lock();
+					if (faceComponent) {
+						auto face = std::dynamic_pointer_cast<Face>(faceComponent);
 						// Aplica dano
 						face->Damage(std::rand() % 10 + 10);
 						// Sai do loop (só queremos acertar um)
