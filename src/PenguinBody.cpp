@@ -33,9 +33,13 @@ PenguinBody::~PenguinBody() {
 }
 
 void PenguinBody::NotifyCollision(GameObject& other) {
-    Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+    auto bulletComponent = other.GetComponent("Bullet").lock();
+    if (!bulletComponent) {
+        return;
+    }
 
-    if (bullet != nullptr && bullet->targetsPlayer) {
+    auto bullet = std::dynamic_pointer_cast<Bullet>(bulletComponent);
+    if (bullet->targetsPlayer) {
         hp -= bullet->GetDamage();
     }
 }
