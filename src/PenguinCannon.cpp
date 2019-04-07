@@ -27,7 +27,7 @@ void PenguinCannon::Update(float dt) {
     timer.Update(dt);
     InputManager& im = InputManager::GetInstance();
     std::shared_ptr<GameObject> body = penguinBody.lock();
-    if (body->IsDead()) {
+    if (!body || body->IsDead()) {
         associated.RequestDelete();
     }
 
