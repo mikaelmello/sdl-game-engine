@@ -54,7 +54,6 @@ void PenguinBody::Start() {
 }
 
 void PenguinBody::Update(float dt) {
-    std::shared_ptr<GameObject> pcGo = penguinCannon.lock();
     InputManager& im = InputManager::GetInstance();
     linearSpeed = speed.x;
 
@@ -78,7 +77,10 @@ void PenguinBody::Update(float dt) {
 
     if (hp <= 0) {
         associated.RequestDelete();
-        pcGo->RequestDelete();
+        if (auto pcGo = penguinCannon.lock()) {
+            pcGo->RequestDelete();
+        }
+
         Camera::Unfollow();
 
         GameObject* explosion = new GameObject();
