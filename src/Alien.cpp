@@ -80,10 +80,12 @@ void Alien::Update(float dt) {
 
             for (int i = 0; i < minions.size(); i++) {
                 std::shared_ptr<GameObject> minion = minions[i].lock();
-                float distance = act.pos.Distance(minion->box.Center());
-                if (distance <= minDistance) {
-                    minDistance = distance;
-                    minionIndex = i;
+                if (minion) {
+                    float distance = act.pos.Distance(minion->box.Center());
+                    if (distance <= minDistance) {
+                        minDistance = distance;
+                        minionIndex = i;
+                    }
                 }
             }
 
