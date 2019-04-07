@@ -83,12 +83,15 @@ void StageState::Update(float dt) {
             std::shared_ptr<GameObject> go1 = objects[i];
             std::shared_ptr<GameObject> go2 = objects[j];
 
-            Collider* collider1 = (Collider*)go1->GetComponent("Collider");
-            Collider* collider2 = (Collider*)go2->GetComponent("Collider");
+            auto colliderSp1 = go1->GetComponent("Collider").lock();
+            auto colliderSp2 = go2->GetComponent("Collider").lock();
             
-            if (collider1 == nullptr || collider2 == nullptr) {
+            if (!colliderSp1 || !colliderSp2) {
                 continue;
             }
+
+            auto collider1 = std::dynamic_pointer_cast<Collider>(colliderSp1);
+            auto collider2 = std::dynamic_pointer_cast<Collider>(colliderSp2);
 
             float radDeg1 = Helpers::deg_to_rad(go1->angleDeg);
             float radDeg2 = Helpers::deg_to_rad(go2->angleDeg);

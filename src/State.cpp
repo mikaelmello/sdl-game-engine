@@ -88,6 +88,6 @@ void State::RenderArray() {
     std::for_each(
         objects.begin(),
         objects.end(),
-        [&](std::shared_ptr<GameObject>& go) { go->Render(); }
+        [](std::shared_ptr<GameObject>& go) { go->Render(); }
     );
 }

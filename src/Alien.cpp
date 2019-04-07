@@ -34,9 +34,13 @@ Alien::~Alien() {
 }
 
 void Alien::NotifyCollision(GameObject& other) {
-    Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+    auto bulletComponent = other.GetComponent("Bullet").lock();
+    if (!bulletComponent) {
+        return;
+    }
 
-    if (bullet != nullptr && !bullet->targetsPlayer) {
+    auto bullet = std::dynamic_pointer_cast<Bullet>(bulletComponent);
+    if (!bullet->targetsPlayer) {
         hp -= bullet->GetDamage();
     }
 }
@@ -105,7 +109,7 @@ void Alien::Shoot() {
 
     Vec2 target = player->GetPosition();
 
-    for (int i = 0; i < nMinions; i++) {
+    for (int i = 0; i < minions.size(); i++) {
         std::shared_ptr<GameObject> minion = minions[i].lock();
         float distance = target.Distance(minion->box.Center());
         if (distance <= minDistance) {
@@ -113,8 +117,17 @@ void Alien::Shoot() {
             minionIndex = i;
         }
     }
-    Minion* minion = (Minion*) minions[minionIndex].lock()->GetComponent("Minion");
-    minion->Shoot(target);
+
+    if (minionIndex != -1) {
+        auto minionGo = minions[minionIndex].lock();
+        if (minionGo) {
+            auto minionComponent = minionGo->GetComponent("Minion").lock();
+            if (minionComponent) {
+                auto minion = std::dynamic_pointer_cast<Minion>(minionComponent);
+                minion->Shoot(target);
+            }
+        }
+    }
 }
 
 void Alien::Render() {}

@@ -20,8 +20,8 @@ Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, flo
 }
 
 void Bullet::NotifyCollision(GameObject& other) {
-    Alien* alien = (Alien*)other.GetComponent("Alien");
-    PenguinBody* penguinBody = (PenguinBody*)other.GetComponent("PenguinBody");
+    auto alien = other.GetComponent("Alien").lock();
+    auto penguinBody = other.GetComponent("PenguinBody").lock();
 
     if (alien && !targetsPlayer) {
         associated.RequestDelete();
