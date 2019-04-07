@@ -88,10 +88,13 @@ void Alien::Update(float dt) {
             }
 
             if (minionIndex != -1) {
-                auto component = minions[minionIndex].lock()->GetComponent("Minion");
-                if (auto componentSp = component.lock()) {
-                    auto minion = std::dynamic_pointer_cast<Minion>(componentSp);
-                    minion->Shoot(act.pos);
+                auto minionGo = minions[minionIndex].lock();
+                if (minionGo) {
+                    auto minionComponent = minionGo->GetComponent("Minion").lock();
+                    if (minionComponent) {
+                        auto minion = std::dynamic_pointer_cast<Minion>(minionComponent);
+                        minion->Shoot(act.pos);
+                    }
                 }
             }
             taskQueue.pop();
