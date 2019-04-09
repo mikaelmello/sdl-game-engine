@@ -103,13 +103,13 @@ void Sprite::SetFrame(int frame) {
 }
 
 void Sprite::SetFrameCount(int frameCount) {
-    frameCount = frameCount;
+    this->frameCount = frameCount;
     associated.box.w = GetWidth();
     SetFrame(0);
 }
 
 void Sprite::SetFrameTime(float frameTime) {
-    frameTime = frameTime;
+    this->frameTime = frameTime;
 }
 
 Vec2 Sprite::GetScale() {
