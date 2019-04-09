@@ -41,7 +41,7 @@ void TileMap::Load(const std::string& file) {
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
-    tileSet = tileSet;
+    this->tileSet = tileSet;
 }
 
 int& TileMap::At(int x, int y, int z) {
