@@ -1,15 +1,18 @@
 #define SDL_INCLUDE_MIXER
 #define SDL_INCLUDE_IMAGE
+#define SDL_INCLUDE_TTF
 #include "SDL_include.h"
 #include "Resources.hpp"
 #include "Helpers.hpp"
 #include "Game.hpp"
 #include <string>
+#include <utility>
 #include <algorithm>
 
 std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable;
 std::unordered_map<std::string, std::shared_ptr<Mix_Music>> Resources::musicTable;
 std::unordered_map<std::string, std::shared_ptr<Mix_Chunk>> Resources::soundTable;
+std::unordered_map<std::string, std::shared_ptr<TTF_Font>> Resources::fontTable;
 
 std::shared_ptr<SDL_Texture> Resources::GetImage(const std::string& file) {
     auto it = imageTable.find(file);
@@ -57,6 +60,23 @@ std::shared_ptr<Mix_Chunk> Resources::GetSound(const std::string& file) {
     std::shared_ptr<Mix_Chunk> chunkSp(chunk, [=](Mix_Chunk* chunk) { Mix_FreeChunk(chunk); });
     soundTable.insert(std::make_pair(file, chunkSp));
     return chunkSp;
+}
+
+std::shared_ptr<TTF_Font> Resources::GetFont(const std::string& file, int fontSize) {
+    auto key = file + std::to_string(fontSize);
+    auto it = fontTable.find(key);
+    if (it != fontTable.end()) {
+        return it->second;
+    }
+
+    TTF_Font* font = TTF_OpenFont(file.c_str(), fontSize);
+    if (font == nullptr) {
+        throw std::runtime_error("Could not load font from file " + file + ": " + TTF_GetError());
+    }
+
+    std::shared_ptr<TTF_Font> fontSp(font, [=](TTF_Font* font) { TTF_CloseFont(font); });
+    fontTable.insert(std::make_pair(key, fontSp));
+    return fontSp;
 }
 
 void Resources::ClearImages() {

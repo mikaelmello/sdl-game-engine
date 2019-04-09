@@ -114,4 +114,6 @@ void Sprite::SetFrameTime(float frameTime) {
 
 Vec2 Sprite::GetScale() {
     return scale;
+
+    SDL_Surface* surface = nullptr;
 }

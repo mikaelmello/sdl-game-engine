@@ -1,6 +1,7 @@
 #define INCLUDE_SDL
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
+#define INCLUDE_SDL_TTF
 #include "SDL_include.h"
 #include "Game.hpp"
 #include "InputManager.hpp"
@@ -33,6 +34,11 @@ Game::Game(const std::string& title, int width, int height) : frameStart(0), dt(
     return_code = Mix_Init(mix_flags);
     if (return_code != mix_flags) {
         throw std::runtime_error("Failed to init the SDL_Mixer library");
+    }
+
+    return_code = TTF_Init();
+    if (return_code != 0) {
+        throw std::runtime_error("Failed to init the SDL_TTF library");
     }
 
     return_code = Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
@@ -69,6 +75,7 @@ Game::~Game() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     Mix_CloseAudio();
+    TTF_Quit();
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();
