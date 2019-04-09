@@ -33,7 +33,7 @@ class Sound : public Component {
 
         bool IsOpen() const;
     private:
-        Mix_Chunk* chunk;
+        std::shared_ptr<Mix_Chunk> chunk;
         int channel;
 };
 

@@ -12,7 +12,7 @@
 #include <string>
 
 Sprite::Sprite(GameObject& associated, int frameCount, float frameTime, float secondsToSelfDestruct)
-    : Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount), frameTime(frameTime),
+    : Component(associated), scale(1, 1), frameCount(frameCount), frameTime(frameTime),
       currentFrame(0), secondsToSelfDestruct(secondsToSelfDestruct) {}
 
 Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime,
@@ -24,7 +24,7 @@ Sprite::~Sprite() {}
 
 void Sprite::Open(const std::string& file) {
     texture = Resources::GetImage(file);
-    int return_code = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    int return_code = SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
     if (return_code != 0) {
         throw std::runtime_error("Could not query invalid texture from " + file + ": " + IMG_GetError());
     }
@@ -40,7 +40,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 
 void Sprite::Render(int x, int y) {
     SDL_Rect temp_rect = { x, y, (int) round(scale.x * clipRect.w), (int) round(scale.y * clipRect.h) };
-    int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
+    int return_code = SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(), &clipRect, &temp_rect, associated.angleDeg, nullptr, SDL_FLIP_NONE);
     if (return_code != 0) {
         throw std::runtime_error("Could not copy sprite to rendering target: " + std::string(IMG_GetError()));
     }
@@ -79,7 +79,7 @@ int Sprite::GetHeight() const {
 }
 
 bool Sprite::IsOpen() const {
-    return texture != nullptr;
+    return (bool)texture;
 }
 
 void Sprite::SetScaleX(float scaleX, float scaleY) {

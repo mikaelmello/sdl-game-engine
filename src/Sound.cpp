@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <string>
 
-Sound::Sound(GameObject& associated) : Component(associated), chunk(nullptr), channel(-1) {}
+Sound::Sound(GameObject& associated) : Component(associated), channel(-1) {}
 
 Sound::Sound(GameObject& associated, const std::string& file) : Sound(associated) {
     Open(file);
@@ -24,7 +24,7 @@ void Sound::Open(const std::string& file) {
 }
 
 void Sound::Play(int times) {
-    int availableChannel = Mix_PlayChannel(-1, chunk, times - 1);
+    int availableChannel = Mix_PlayChannel(-1, chunk.get(), times - 1);
     if (availableChannel == -1) {
         throw std::runtime_error("Could not play sound: " + std::string(Mix_GetError()));
     }
@@ -33,7 +33,7 @@ void Sound::Play(int times) {
 }
 
 void Sound::Stop() {
-    if (chunk != nullptr && channel != -1) {
+    if (chunk && channel != -1) {
         Mix_HaltChannel(channel);
     }
 }
@@ -47,6 +47,6 @@ bool Sound::Is(const std::string& type) const {
 }
 
 bool Sound::IsOpen() const {
-    return chunk != nullptr;
+    return (bool)chunk;
 }
 

@@ -48,7 +48,7 @@ class Sprite : public Component {
 
         Vec2 GetScale();
     private:
-        SDL_Texture* texture;
+        std::shared_ptr<SDL_Texture> texture;
         int width;
         int height;
         int frameCount;

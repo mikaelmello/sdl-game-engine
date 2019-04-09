@@ -2,88 +2,92 @@
 #define SDL_INCLUDE_IMAGE
 #include "SDL_include.h"
 #include "Resources.hpp"
+#include "Helpers.hpp"
 #include "Game.hpp"
 #include <string>
 #include <algorithm>
 
-std::unordered_map<std::string, SDL_Texture*> Resources::imageTable;
-std::unordered_map<std::string, Mix_Music*> Resources::musicTable;
-std::unordered_map<std::string, Mix_Chunk*> Resources::soundTable;
+std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable;
+std::unordered_map<std::string, std::shared_ptr<Mix_Music>> Resources::musicTable;
+std::unordered_map<std::string, std::shared_ptr<Mix_Chunk>> Resources::soundTable;
 
-SDL_Texture* Resources::GetImage(const std::string& file) {
+std::shared_ptr<SDL_Texture> Resources::GetImage(const std::string& file) {
     auto it = imageTable.find(file);
     if (it != imageTable.end()) {
         return it->second;
     }
 
     SDL_Texture* texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-
     if (texture == nullptr) {
         throw std::runtime_error("Could not load texture from file " + file + ": " + IMG_GetError());
     }
 
-    imageTable.insert(std::make_pair(file, texture));
-    return texture;
+    std::shared_ptr<SDL_Texture> textureSp(texture, [=](SDL_Texture* texture) { SDL_DestroyTexture(texture); });
+    imageTable.insert(std::make_pair(file, textureSp));
+    return textureSp;
 }
 
-Mix_Music* Resources::GetMusic(const std::string& file) {
+std::shared_ptr<Mix_Music> Resources::GetMusic(const std::string& file) {
     auto it = musicTable.find(file);
     if (it != musicTable.end()) {
         return it->second;
     }
 
     Mix_Music* music = Mix_LoadMUS(file.c_str());
-
     if (music == nullptr) {
         throw std::runtime_error("Could not load music from file " + file + ": " + Mix_GetError());
     }
 
-    musicTable.insert(std::make_pair(file, music));
-    return music;
+    std::shared_ptr<Mix_Music> musicSp(music, [=](Mix_Music* music) { Mix_FreeMusic(music); });
+    musicTable.insert(std::make_pair(file, musicSp));
+    return musicSp;
 }
 
-Mix_Chunk* Resources::GetSound(const std::string& file) {
+std::shared_ptr<Mix_Chunk> Resources::GetSound(const std::string& file) {
     auto it = soundTable.find(file);
     if (it != soundTable.end()) {
         return it->second;
     }
 
     Mix_Chunk* chunk = Mix_LoadWAV(file.c_str());
-
     if (chunk == nullptr) {
         throw std::runtime_error("Could not load sound from file " + file + ": " + Mix_GetError());
     }
 
-    soundTable.insert(std::make_pair(file, chunk));
-    return chunk;
+    std::shared_ptr<Mix_Chunk> chunkSp(chunk, [=](Mix_Chunk* chunk) { Mix_FreeChunk(chunk); });
+    soundTable.insert(std::make_pair(file, chunkSp));
+    return chunkSp;
 }
 
 void Resources::ClearImages() {
-    std::for_each(
-        imageTable.begin(),
-        imageTable.end(),
-        [](std::unordered_map<std::string, SDL_Texture*>::value_type item) { SDL_DestroyTexture(item.second); }
-    );
-
-    imageTable.clear();
+    for(auto it = imageTable.begin(); it != imageTable.end();) {
+        auto sp = it->second;
+        if (sp.unique()) {
+            it = imageTable.erase(it);
+        } else {
+            it++;
+        }
+    }
 }
 
 void Resources::ClearMusics() {
-    std::for_each(
-        musicTable.begin(),
-        musicTable.end(),
-        [](std::unordered_map<std::string, Mix_Music*>::value_type item) { Mix_FreeMusic(item.second); }
-    );
-
-    musicTable.clear();
+    for(auto it = musicTable.begin(); it != musicTable.end();) {
+        auto sp = it->second;
+        if (sp.unique()) {
+            it = musicTable.erase(it);
+        } else {
+            it++;
+        }
+    }
 }
 
 void Resources::ClearSounds() {
-    std::for_each(
-        soundTable.begin(),
-        soundTable.end(),
-        [](std::pair<const std::string, Mix_Chunk*> item) { Mix_FreeChunk(item.second); }
-    );
-
-    soundTable.clear();
+    for(auto it = soundTable.begin(); it != soundTable.end();) {
+        auto sp = it->second;
+        if (sp.unique()) {
+            it = soundTable.erase(it);
+        } else {
+            it++;
+        }
+    }
 }

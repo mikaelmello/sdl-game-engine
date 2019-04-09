@@ -1,3 +1,7 @@
+#define INCLUDE_SDL
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#include "SDL_include.h"
 #include "Helpers.hpp"
 #include <string>
 #include <sstream>
@@ -6,6 +10,7 @@
 #include <iterator>
 #include <memory>
 #include <algorithm>
+#include <unordered_map>
 
 template<typename Out>
 void Helpers::split(const std::string &s, char delim, Out result) {

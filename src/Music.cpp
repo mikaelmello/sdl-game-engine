@@ -4,9 +4,10 @@
 #include "Music.hpp"
 #include "Resources.hpp"
 #include <string>
+#include <memory>
 #include <stdexcept>
 
-Music::Music() : music(nullptr) {}
+Music::Music() {}
 
 Music::Music(const std::string& file) : Music() {
     Open(file);
@@ -17,12 +18,12 @@ void Music::Open(const std::string& file) {
 }
 
 void Music::Play(int times) {
-    if (music == nullptr) {
+    if (!music) {
         throw std::invalid_argument("Can not play music, file not open");
         return;
     }
 
-    int return_code = Mix_PlayMusic(music, times);
+    int return_code = Mix_PlayMusic(music.get(), times);
     if (return_code != 0) {
         throw std::runtime_error("Could not play music: " + std::string(Mix_GetError()));
     }
@@ -36,7 +37,7 @@ void Music::Stop(int msTostop) {
 }
 
 bool Music::IsOpen() const {
-    return music != nullptr;
+    return (bool)music;
 }
 
 Music::~Music() {}
