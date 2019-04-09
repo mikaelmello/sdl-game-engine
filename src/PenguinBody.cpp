@@ -75,6 +75,21 @@ void PenguinBody::Update(float dt) {
     associated.box += movement;
     associated.angleDeg = Helpers::rad_to_deg(angle);
 
+    Rect mapRect = {0, 0, 1408, 1280};
+    Vec2 pos = associated.box.Center();
+    if (pos.x > mapRect.w){
+        pos.x = mapRect.w;
+    } else if (pos.x < 0){
+        pos.x = 0;
+    }
+    if (pos.y > mapRect.h) {
+        pos.y = mapRect.h;
+    } else if (pos.y < 0) {
+        pos.y = 0;
+    }
+
+    associated.box = associated.box.GetCentered(pos);
+
     if (hp <= 0) {
         associated.RequestDelete();
         if (auto pcGo = penguinCannon.lock()) {
