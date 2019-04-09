@@ -38,11 +38,15 @@ StageState::StageState() : State() {
     mapGo->AddComponent(map);
     objects.emplace_back(mapGo);
 
-    GameObject* alienGo = new GameObject();
-    Alien* alien = new Alien(*alienGo, 4);
-    alienGo->AddComponent(alien);
-    alienGo->box = alienGo->box.GetCentered(512, 300);
-    objects.emplace_back(alienGo);
+    Vec2 alienPositions[] = { {0, 0}, {0, 1280}, {1408, 0}, {1408, 1280} };
+    float alienOffsets[] = { -0.32, 0.57, 0, 2.142};
+    for (int i = 0; i < 4; i++) {
+        GameObject* alienGo = new GameObject();
+        Alien* alien = new Alien(*alienGo, 4, alienOffsets[i]);
+        alienGo->AddComponent(alien);
+        alienGo->box = alienGo->box.GetCentered(alienPositions[i]);
+        objects.emplace_back(alienGo);
+    }
 
     GameObject* penguinGo = new GameObject();
     PenguinBody* pb = new PenguinBody(*penguinGo);

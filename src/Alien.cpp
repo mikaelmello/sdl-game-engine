@@ -19,7 +19,8 @@
 const float Alien::restingCooldown = 1;
 int Alien::alienCount = 0;
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated), nMinions(nMinions), speed(300, 0), hp(200), state(AlienState::RESTING) {
+Alien::Alien(GameObject& associated, int nMinions, float timeOffset) : Component(associated), nMinions(nMinions),
+speed(300, 0), hp(200), state(AlienState::RESTING), timeOffset(timeOffset) {
     Sprite* sprite = new Sprite(associated, "assets/img/alien.png");
     Collider* collider = new Collider(associated);
     associated.AddComponent(sprite);
@@ -89,7 +90,7 @@ void Alien::Update(float dt) {
         } else {
             associated.box += speed * dt;
         }
-    } else if (state == AlienState::RESTING && player && restTimer.Get() >= restingCooldown) {
+    } else if (state == AlienState::RESTING && player && restTimer.Get() >= restingCooldown + timeOffset) {
         destination = player->GetPosition();
         float direction = (destination - curPos).XAxisInclination();
         speed = Vec2(speed.Magnitude(), 0).GetRotated(direction);
