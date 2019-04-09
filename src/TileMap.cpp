@@ -47,7 +47,7 @@ void TileMap::Load(const std::string& file) {
 }
 
 void TileMap::SetTileSet(TileSet* tileSet) {
-    tileSet = tileSet;
+    this->tileSet = tileSet;
 }
 
 void TileMap::SetParallax(int layer, float xFactor, float yFactor) {
