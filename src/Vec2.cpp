@@ -41,7 +41,7 @@ Vec2& Vec2::operator-=(const Vec2& rhs) {
     return *this;
 }
 
-Vec2& Vec2::operator*=(const int& rhs) {
+Vec2& Vec2::operator*=(const float& rhs) {
     x *= rhs;
     y *= rhs;
     return *this;
