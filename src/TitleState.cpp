@@ -24,16 +24,20 @@ TitleState::TitleState() {
 TitleState::~TitleState() {}
 
 void TitleState::Update(float dt) {
+    if (quitRequested || popRequested) {
+        return;
+    }
+
     InputManager& im = InputManager::GetInstance();
 
     UpdateArray(dt);
 
-    if (im.IsKeyDown(ESCAPE_KEY)) {
+    if (im.IsKeyDown(ESCAPE_KEY) || im.QuitRequested()) {
         quitRequested = true;
         return;
     }
 
-    if (im.IsKeyDown(SPACE_BAR_KEY) || im.QuitRequested()) {
+    if (im.IsKeyDown(SPACE_BAR_KEY)) {
         Game& game = Game::GetInstance();
         StageState* stageState = new StageState();
         game.Push(stageState);

@@ -15,6 +15,9 @@
 #include "Helpers.hpp"
 #include "Collision.hpp"
 #include "Collider.hpp"
+#include "GameData.hpp"
+#include "EndState.hpp"
+#include "Game.hpp"
 #include <string>
 #include <cmath>
 #include <algorithm>
@@ -76,6 +79,10 @@ void StageState::LoadAssets() {
 }
 
 void StageState::Update(float dt) {
+    if (quitRequested || popRequested) {
+        return;
+    }
+
     InputManager& im = InputManager::GetInstance();
     quitRequested |= im.QuitRequested();
     popRequested |= im.KeyPress(ESCAPE_KEY);
@@ -117,6 +124,14 @@ void StageState::Update(float dt) {
         ),
         objects.end()
     );
+
+    if (PenguinBody::player == nullptr || Alien::alienCount == 0) {
+        GameData::playerVictory = PenguinBody::player != nullptr;
+        popRequested = true;
+        Game& game = Game::GetInstance();
+        EndState* endState = new EndState();
+        game.Push(endState);
+    }
 }
 
 void StageState::Render() {
