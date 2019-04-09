@@ -1,24 +1,18 @@
-#ifndef STAGESTATE_H
-#define STAGESTATE_H
+#ifndef TITLESTATE_H
+#define TITLESTATE_H
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "GameObject.hpp"
-#include "TileSet.hpp"
-#include "Sprite.hpp"
-#include "Music.hpp"
 #include "State.hpp"
-#include <string>
-#include <vector>
-#include <memory>
+#include "Music.hpp"
 
-class StageState : public State {
+class TitleState : public State {
     public:
-        StageState();
+        TitleState();
 
-        ~StageState();
+        ~TitleState();
 
         void Start();
 
@@ -26,14 +20,13 @@ class StageState : public State {
 
         void Resume();
 
+        bool QuitRequested() const;
+
         void LoadAssets();
 
         void Update(float dt);
 
         void Render();
-    private:
-        Music music;
-        TileSet* tileSet;
 };
 
 #endif

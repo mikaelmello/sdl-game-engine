@@ -13,7 +13,6 @@
 #include "PenguinBody.hpp"
 #include <string>
 #include <memory>
-#include <iostream>
 #include <cmath>
 #include <queue>
 

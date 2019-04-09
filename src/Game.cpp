@@ -123,6 +123,7 @@ void Game::Run() {
                 pauseState->Pause();
             }
             stateStack.emplace(storedState);
+            storedState->Start();
             storedState = nullptr;
         }        
 
@@ -138,6 +139,10 @@ void Game::Run() {
         state->Render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
+    }
+
+    while (!stateStack.empty()) {
+        stateStack.pop();
     }
 
     Resources::ClearImages();

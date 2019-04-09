@@ -54,16 +54,21 @@ StageState::StageState() : State() {
 }
 
 void StageState::Start() {
+    started = true;
     LoadAssets();
     StartArray();
-    started = true;
 }
 
-void StageState::Pause() {}
+void StageState::Pause() {
+    music.Stop(1);
+}
 
-void StageState::Resume() {}
+void StageState::Resume() {
+    music.Play();
+}
 
 StageState::~StageState() {
+    music.Stop(1);
 	delete tileSet;
 }
 
@@ -72,7 +77,8 @@ void StageState::LoadAssets() {
 
 void StageState::Update(float dt) {
     InputManager& im = InputManager::GetInstance();
-    quitRequested |= im.QuitRequested() || im.KeyPress(ESCAPE_KEY);
+    quitRequested |= im.QuitRequested();
+    popRequested |= im.KeyPress(ESCAPE_KEY);
 
     Camera::Update(dt);
 

@@ -1,13 +1,13 @@
 #define INCLUDE_SDL
 #include "SDL_include.h"
 #include "Game.hpp"
-#include "StageState.hpp"
+#include "TitleState.hpp"
 #include <iostream>
 
 int main (int argc, char** argv) {
     try {
         Game& game = Game::GetInstance();
-        StageState* state = new StageState();
+        TitleState* state = new TitleState();
         game.Push(state);
         game.Run();
     } catch (const std::exception& ex) {
