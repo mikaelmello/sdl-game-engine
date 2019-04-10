@@ -50,11 +50,11 @@ State::State() : quitRequested(false), started(false) {
     Camera::Follow(penguinGo);
 
     music.Open("assets/audio/stageState.ogg");
-    music.Play();
 }
 
 void State::Start() {
     LoadAssets();
+	music.Play();
 
     std::for_each(
         objects.begin(),
