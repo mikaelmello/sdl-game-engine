@@ -57,11 +57,11 @@ StageState::StageState() : State() {
     Camera::Follow(penguinGo);
 
     music.Open("assets/audio/stageState.ogg");
-	music.Play();
 }
 
 void StageState::Start() {
     started = true;
+	music.Play();
     LoadAssets();
     StartArray();
 }
