@@ -67,7 +67,7 @@ void StageState::Start() {
 }
 
 void StageState::Pause() {
-    music.Stop(1);
+    music.Stop(0);
 }
 
 void StageState::Resume() {
@@ -75,7 +75,7 @@ void StageState::Resume() {
 }
 
 StageState::~StageState() {
-    music.Stop(1);
+    music.Stop(0);
 	delete tileSet;
 }
 

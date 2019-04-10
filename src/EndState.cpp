@@ -57,6 +57,7 @@ void EndState::Update(float dt) {
 }
 
 void EndState::Start() {
+    backgroundMusic.Play();
     LoadAssets();
     StartArray();
     started = true;
