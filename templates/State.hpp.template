@@ -1,0 +1,32 @@
+#ifndef <UPPERCASENAME>_H
+#define <UPPERCASENAME>_H
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                  INCLUDES E DEFINES
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#include "State.hpp"
+#include "Music.hpp"
+
+class <CAMELCASENAME> : public State {
+    public:
+        <CAMELCASENAME>();
+
+        ~<CAMELCASENAME>();
+
+        void Start();
+
+        void Pause();
+
+        void Resume();
+
+        bool QuitRequested() const;
+
+        void LoadAssets();
+
+        void Update(float dt);
+
+        void Render();
+};
+
+#endif

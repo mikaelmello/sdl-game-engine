@@ -1,0 +1,30 @@
+#include "<CAMELCASENAME>.hpp"
+
+<CAMELCASENAME>::<CAMELCASENAME>() {
+}
+
+<CAMELCASENAME>::~<CAMELCASENAME>() {}
+
+void <CAMELCASENAME>::Update(float dt) {
+    if (quitRequested || popRequested) {
+        return;
+    }
+
+    UpdateArray(dt);
+}
+
+void <CAMELCASENAME>::Start() {
+    LoadAssets();
+    StartArray();
+    started = true;
+}
+
+void <CAMELCASENAME>::Pause() {}
+
+void <CAMELCASENAME>::Resume() {}
+
+void <CAMELCASENAME>::LoadAssets() {}
+
+void <CAMELCASENAME>::Render() {
+    RenderArray();
+}
