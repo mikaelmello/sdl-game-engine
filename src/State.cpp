@@ -8,8 +8,6 @@
 #include "CameraFollower.hpp"
 #include "GameObject.hpp"
 #include "Component.hpp"
-#include "Alien.hpp"
-#include "PenguinBody.hpp"
 #include "Vec2.hpp"
 #include "Music.hpp"
 #include "Helpers.hpp"
