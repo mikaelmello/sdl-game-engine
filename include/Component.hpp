@@ -5,6 +5,7 @@
  *                  INCLUDES E DEFINES
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#include "GameData.hpp"
 #include <string>
 
 class GameObject;
@@ -23,7 +24,7 @@ class Component {
 
         virtual void Render() = 0;
 
-        virtual bool Is(const std::string& type) const = 0;
+        virtual bool Is(GameData::Types type) const = 0;
 
     protected:
         GameObject& associated;

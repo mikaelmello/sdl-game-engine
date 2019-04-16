@@ -68,7 +68,7 @@ void GameObject::RemoveComponent(Component* cpt) {
     }
 }
 
-std::weak_ptr<Component> GameObject::GetComponent(const std::string& type) {
+std::weak_ptr<Component> GameObject::GetComponent(GameData::Types type) {
     auto it = std::find_if(components.begin(), components.end(),
         [&](std::shared_ptr<Component>& cpt2){ return cpt2->Is(type); });
 

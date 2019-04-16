@@ -15,7 +15,7 @@ class CameraFollower : public Component {
 
         void Update(float dt) override;
 
-        bool Is(const std::string& type) const override;
+        bool Is(GameData::Types type) const override;
 
         void Render() override;
 };

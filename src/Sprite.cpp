@@ -6,6 +6,7 @@
 #include "Camera.hpp"
 #include "Resources.hpp"
 #include "Component.hpp"
+#include "GameData.hpp"
 #include "Timer.hpp"
 #include "GameObject.hpp"
 #include <stdexcept>
@@ -66,8 +67,8 @@ void Sprite::Update(float dt) {
     }
 }
 
-bool Sprite::Is(const std::string& type) const {
-    return type == std::string("Sprite");
+bool Sprite::Is(GameData::Types type) const {
+    return type == GameData::Types::Sprite;
 }
 
 int Sprite::GetWidth() const {

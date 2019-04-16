@@ -26,7 +26,7 @@ class Text : public Component {
 
         void Render() override;
 
-        bool Is(const std::string& type) const override;
+        bool Is(GameData::Types type) const override;
 
         void SetText(const std::string& text);
 

@@ -4,6 +4,7 @@
 #include "Camera.hpp"
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include "GameData.hpp"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -91,8 +92,8 @@ int TileMap::GetHeight() {
     return mapHeight;
 }
 
-bool TileMap::Is(const std::string& type) const {
-    return type == std::string("TileMap");
+bool TileMap::Is(GameData::Types type) const {
+    return type == GameData::Types::TileMap;
 }
 
 

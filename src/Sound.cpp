@@ -5,6 +5,7 @@
 #include "SDL_include.h"
 #include "Sound.hpp"
 #include "Game.hpp"
+#include "GameData.hpp"
 #include "GameObject.hpp"
 #include "Resources.hpp"
 #include "Component.hpp"
@@ -42,8 +43,8 @@ void Sound::Render() {}
 
 void Sound::Update(float dt) {}
 
-bool Sound::Is(const std::string& type) const {
-    return type == std::string("Sound");
+bool Sound::Is(GameData::Types type) const {
+    return type == GameData::Types::Sound;
 }
 
 bool Sound::IsOpen() const {

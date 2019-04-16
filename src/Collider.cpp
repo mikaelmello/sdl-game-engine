@@ -6,6 +6,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #endif // DEBUG
+#include "GameData.hpp"
 #include "Collider.hpp"
 #include "Helpers.hpp"
 #include "GameObject.hpp"
@@ -53,8 +54,8 @@ void Collider::Render() {
 #endif // DEBUG
 }
 
-bool Collider::Is(const std::string& type) const {
-    return type == std::string("Collider");
+bool Collider::Is(GameData::Types type) const {
+    return type == GameData::Types::Collider;
 }
 
 void Collider::SetOffset(Vec2 offset) {

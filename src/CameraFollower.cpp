@@ -1,5 +1,6 @@
 #include "CameraFollower.hpp"
 #include "Camera.hpp"
+#include "GameData.hpp"
 #include <string>
 
 CameraFollower::CameraFollower(GameObject& associated) : Component(associated) {}
@@ -11,6 +12,6 @@ void CameraFollower::Update(float dt) {
 
 void CameraFollower::Render() {}
 
-bool CameraFollower::Is(const std::string& type) const {
-    return type == std::string("CameraFollower");
+bool CameraFollower::Is(GameData::Types type) const {
+    return type == GameData::Types::CameraFollower;
 }

@@ -4,6 +4,7 @@
 #include "SDL_include.h"
 #include "Text.hpp"
 #include "Game.hpp"
+#include "GameData.hpp"
 #include "Resources.hpp"
 #include "Component.hpp"
 #include "GameObject.hpp"
@@ -44,8 +45,8 @@ void Text::Render() {
     }
 }
 
-bool Text::Is(const std::string& type) const {
-    return type == std::string("Text");
+bool Text::Is(GameData::Types type) const {
+    return type == GameData::Types::Text;
 }
 
 void Text::SetText(const std::string& text) {

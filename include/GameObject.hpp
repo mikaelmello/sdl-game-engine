@@ -33,7 +33,7 @@ class GameObject {
 
         void RemoveComponent(Component* cpt);
 
-        std::weak_ptr<Component> GetComponent(const std::string& type);
+        std::weak_ptr<Component> GetComponent(GameData::Types type);
 
         Rect box;
 

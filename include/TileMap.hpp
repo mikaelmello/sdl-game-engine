@@ -26,7 +26,7 @@ class TileMap : public Component {
         
         void RenderLayer(int layer, int cameraX = 0, int cameraY = 0);
 
-        bool Is(const std::string& type) const override;
+        bool Is(GameData::Types type) const override;
 
         void Update(float dt) override;
 
