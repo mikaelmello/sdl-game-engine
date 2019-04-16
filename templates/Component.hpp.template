@@ -1,0 +1,30 @@
+#ifndef <UPPERCASENAME>_H
+#define <UPPERCASENAME>_H
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                  INCLUDES E DEFINES
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#include "Component.hpp"
+#include "GameObject.hpp"
+#include <string>
+
+class <CAMELCASENAME> : public Component {
+    public:
+        <CAMELCASENAME>(GameObject& associated);
+
+        ~<CAMELCASENAME>();
+
+        void Start() override;
+
+        void NotifyCollision(GameObject& other) override;
+
+        void Update(float dt) override;
+
+        bool Is(const std::string& type) const override;
+
+        void Render() override;
+    private:
+};
+
+#endif

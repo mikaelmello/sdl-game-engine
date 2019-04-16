@@ -1,0 +1,26 @@
+#include "<CAMELCASENAME>.hpp"
+#include "GameObject.hpp"
+#include "Collider.hpp"
+#include "Sprite.hpp"
+#include <string>
+
+<CAMELCASENAME>::<CAMELCASENAME>(GameObject& associated) : Component(associated) {
+    Collider* collider = new Collider(associated);
+    Sprite* sprite = new Sprite(associated, <SPRITEPATH>);
+    associated.AddComponent(collider);
+    associated.AddComponent(sprite);
+}
+
+<CAMELCASENAME>::~<CAMELCASENAME>() {}
+
+void <CAMELCASENAME>::NotifyCollision(GameObject& other) {}
+
+void <CAMELCASENAME>::Start() {}
+
+void <CAMELCASENAME>::Update(float dt) {}
+
+void <CAMELCASENAME>::Render() {}
+
+bool <CAMELCASENAME>::Is(const std::string& type) const {
+    return type == std::string("<CAMELCASENAME>");
+}
