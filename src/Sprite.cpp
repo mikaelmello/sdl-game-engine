@@ -68,7 +68,7 @@ void Sprite::Update(float dt) {
 }
 
 bool Sprite::Is(GameData::Types type) const {
-    return type == GameData::Types::Sprite;
+    return type == this->Type;
 }
 
 int Sprite::GetWidth() const {

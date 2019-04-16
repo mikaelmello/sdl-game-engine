@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include "GameData.hpp"
 #include "Vec2.hpp"
 #include "Rect.hpp"
 #include <string>
@@ -27,6 +28,8 @@ class Collider : public Component {
         void SetOffset(Vec2 offset);
 
         Rect box;
+
+        const GameData::Types Type = GameData::Types::Collider;
     private:
         Vec2 scale;
         Vec2 offset;

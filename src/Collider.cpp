@@ -55,7 +55,7 @@ void Collider::Render() {
 }
 
 bool Collider::Is(GameData::Types type) const {
-    return type == GameData::Types::Collider;
+    return type == this->Type;
 }
 
 void Collider::SetOffset(Vec2 offset) {

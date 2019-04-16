@@ -44,7 +44,7 @@ void Sound::Render() {}
 void Sound::Update(float dt) {}
 
 bool Sound::Is(GameData::Types type) const {
-    return type == GameData::Types::Sound;
+    return type == this->Type;
 }
 
 bool Sound::IsOpen() const {

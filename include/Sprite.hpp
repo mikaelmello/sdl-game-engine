@@ -10,6 +10,7 @@
 #include "Component.hpp"
 #include "Timer.hpp"
 #include "GameObject.hpp"
+#include "GameData.hpp"
 #include <string>
 
 class Sprite : public Component {
@@ -47,6 +48,8 @@ class Sprite : public Component {
         void SetFrameTime(float frameTime);
 
         Vec2 GetScale();
+
+        const GameData::Types Type = GameData::Types::Sprite;
     private:
         std::shared_ptr<SDL_Texture> texture;
         int width;

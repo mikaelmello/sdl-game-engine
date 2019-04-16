@@ -11,6 +11,7 @@
 #include "GameObject.hpp"
 #include "Timer.hpp"
 #include "Component.hpp"
+#include "GameData.hpp"
 #include <string>
 #include <memory>
 
@@ -39,6 +40,8 @@ class Text : public Component {
         void SetFontSize(int fontSize);
 
         void SetBlink(bool blink, float blinkPeriod);
+
+        const GameData::Types Type = GameData::Types::Text;
     private:
         void RemakeTexture();
 

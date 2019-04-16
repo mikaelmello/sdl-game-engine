@@ -13,5 +13,5 @@ void CameraFollower::Update(float dt) {
 void CameraFollower::Render() {}
 
 bool CameraFollower::Is(GameData::Types type) const {
-    return type == GameData::Types::CameraFollower;
+    return type == this->Type;
 }

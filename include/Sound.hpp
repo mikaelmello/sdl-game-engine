@@ -8,6 +8,7 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 #include "Component.hpp"
+#include "GameData.hpp"
 #include "GameObject.hpp"
 #include <string>
 
@@ -32,6 +33,8 @@ class Sound : public Component {
         void Render() override;
 
         bool IsOpen() const;
+
+        const GameData::Types Type = GameData::Types::Sound;
     private:
         std::shared_ptr<Mix_Chunk> chunk;
         int channel;

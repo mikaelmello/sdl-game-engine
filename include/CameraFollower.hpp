@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include "GameObject.hpp"
+#include "GameData.hpp"
 #include <string>
 
 class CameraFollower : public Component {
@@ -18,6 +19,8 @@ class CameraFollower : public Component {
         bool Is(GameData::Types type) const override;
 
         void Render() override;
+
+        const GameData::Types Type = GameData::Types::CameraFollower;
 };
 
 #endif

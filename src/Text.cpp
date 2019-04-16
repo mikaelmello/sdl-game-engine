@@ -46,7 +46,7 @@ void Text::Render() {
 }
 
 bool Text::Is(GameData::Types type) const {
-    return type == GameData::Types::Text;
+    return type == this->Type;
 }
 
 void Text::SetText(const std::string& text) {

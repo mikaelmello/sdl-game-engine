@@ -93,7 +93,7 @@ int TileMap::GetHeight() {
 }
 
 bool TileMap::Is(GameData::Types type) const {
-    return type == GameData::Types::TileMap;
+    return type == this->Type;
 }
 
 
