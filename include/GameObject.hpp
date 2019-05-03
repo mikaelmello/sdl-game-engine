@@ -13,7 +13,7 @@
 
 class GameObject {
     public:
-        GameObject();
+        GameObject(double priority = 1000);
 
         ~GameObject();
 
@@ -38,6 +38,8 @@ class GameObject {
         Rect box;
 
         double angleDeg;
+
+        double priority;
     private:
         std::vector<std::shared_ptr<Component>> components;
         bool isDead;

@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <set>
 
 class State {
     public:
@@ -48,8 +49,14 @@ class State {
         bool popRequested;
         bool quitRequested;
         bool started;
-        std::vector<std::shared_ptr<GameObject>> objects;
-        std::vector<std::shared_ptr<GameObject>> newObjects;
+
+        struct GameObjectComp {
+            bool operator()(const std::shared_ptr<GameObject>& lhs, const std::shared_ptr<GameObject>& rhs) const {
+                return lhs->priority < rhs->priority;
+            }
+        };
+
+        std::multiset<std::shared_ptr<GameObject>, GameObjectComp> objects;
 };
 
 #endif
